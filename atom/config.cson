@@ -1,0 +1,45 @@
+"*":
+  "activate-power-mode":
+    plugins:
+      playAudio: true
+      screenShake: true
+  "atom-beautify":
+    general:
+      _analyticsUserId: "c77ac7cc-3701-45b4-b7fd-5868d2916776"
+  core:
+    disabledPackages: [
+      "language-gfm"
+      "linter-write-good"
+      "spell-check"
+      "linter-shellcheck"
+    ]
+    projectHome: "/Users/edmadrigal/Repos"
+    telemetryConsent: "limited"
+  editor:
+    fontSize: 13
+  "exception-reporting":
+    userId: "e60436fd-f31e-1b62-10fe-6d7486232f23"
+  "git-plus":
+    general:
+      _analyticsUserId: "39a2e418-fe49-44dd-b4e7-d23e307c7afa"
+  "highlight-line":
+    enableBackgroundColor: false
+  "linter-ui-default":
+    panelHeight: 69
+  minimap:
+    plugins:
+      cursorline: true
+      cursorlineDecorationsZIndex: 0
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+      selection: true
+      selectionDecorationsZIndex: 0
+  "split-diff": {}
+  welcome:
+    showOnStartup: false
