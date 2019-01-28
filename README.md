@@ -22,7 +22,7 @@ my workstation configuration
 ## Setup
 
 ```bash
-
+bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/init.sh)
 ```
 
 ## Italics in iTerm and Tmux

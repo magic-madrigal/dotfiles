@@ -280,9 +280,9 @@ main() {
   # Welcome Banner
   ascii_font
 
-  read -p "Are you installing on a mac or linux? (m/l) " -n 1 answer
+  read -p "Are you installing on a mac or linux? (mac/linux) " -n 1 answer
   echo
-  if [[ $answer == "m" || $answer == "M" ]]; then
+  if [[ $answer == "mac" ]]; then
     OS=MAC
     INSTALL_CMD=brew
     homebrew_install
@@ -293,7 +293,7 @@ main() {
     fish_install
   fi
 
-  if [[ $answer == "l" || $answer == "L" ]]; then
+  if [[ $answer == "linux" ]]; then
     OS=LINUX
     INSTALL_CMD=apt-get
     dependants_install
