@@ -21,7 +21,7 @@ Plug 'w0rp/ale'                        " Shows inline lint errors
 Plug 'liuchengxu/vim-which-key'        " Displays mappings for <leader> in window
 Plug 'Kazark/vim-SimpleSmoothScroll'   " Slows down scroll speed
 Plug 'mbbill/undotree'                 " Visualize Vim undo tree.
-" Plug 'edkolev/tmuxline.vim'			       " Tags of what function you are working in.
+" Plug 'edkolev/tmuxline.vim'            " Tags of what function you are working in.
 " Plug 'vim-syntastic/syntastic'         " Syntax highighting
 
 " Text

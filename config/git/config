@@ -1,0 +1,20 @@
+[user]
+  email = heriberto.madrigal@gmail.com
+  name = Magic Madrigal
+[color]
+  ui = true
+[core]
+  editor = vim
+  quotepath = false
+  excludesfile =  ~/.gitignore
+[diff]
+  tool = vimdiff
+[status]
+  short = true
+[fetch]
+  # Delete local branches that are deleted remotely
+  prune = true
+[alias]
+  tree = log --graph --decorate --oneline --abbrev-commit
+  # Delete local branches that are already merged to master
+  cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"

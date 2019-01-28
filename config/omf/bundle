@@ -1,0 +1,5 @@
+package aws
+package osx
+package thefuck
+theme bobthefish
+theme default
