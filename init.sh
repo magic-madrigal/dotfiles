@@ -67,7 +67,7 @@ otherPkgs=(
 # Functions
 # ---------
 
-ascii_font() {
+welcome() {
   echo ' __    __     ______     ______     __     ______    '
   echo '/\ "-./  \   /\  __ \   /\  ___\   /\ \   /\  ___\   '
   echo '\ \ \-./\ \  \ \  __ \  \ \ \__ \  \ \ \  \ \ \____  '
@@ -78,6 +78,22 @@ ascii_font() {
 
 
 homebrew_install() {
+  echo
+  echo
+  echo '     ___           ___           ___           ___           ___           ___           ___           ___     '
+  echo '    /\__\         /\  \         /\__\         /\  \         /\  \         /\  \         /\  \         /\__\    '
+  echo '   /:/  /        /::\  \       /::|  |       /::\  \       /::\  \       /::\  \       /::\  \       /:/ _/_   '
+  echo '  /:/__/        /:/\:\  \     /:|:|  |      /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/ /\__\  '
+  echo ' /::\  \ ___   /:/  \:\  \   /:/|:|__|__   /::\~\:\  \   /::\~\:\__\   /::\~\:\  \   /::\~\:\  \   /:/ /:/ _/_ '
+  echo '/:/\:\  /\__\ /:/__/ \:\__\ /:/ |::::\__\ /:/\:\ \:\__\ /:/\:\ \:|__| /:/\:\ \:\__\ /:/\:\ \:\__\ /:/_/:/ /\__\'
+  echo '\/__\:\/:/  / \:\  \ /:/  / \/__/~~/:/  / \:\~\:\ \/__/ \:\~\:\/:/  / \/_|::\/:/  / \:\~\:\ \/__/ \:\/:/ /:/  /'
+  echo '     \::/  /   \:\  /:/  /        /:/  /   \:\ \:\__\    \:\ \::/  /     |:|::/  /   \:\ \:\__\    \::/_/:/  / '
+  echo '     /:/  /     \:\/:/  /        /:/  /     \:\ \/__/     \:\/:/  /      |:|\/__/     \:\ \/__/     \:\/:/  /  '
+  echo '    /:/  /       \::/  /        /:/  /       \:\__\        \::/__/       |:|  |        \:\__\        \::/  /   '
+  echo '    \/__/         \/__/         \/__/         \/__/         ~~            \|__|         \/__/         \/__/    '
+  echo
+  echo
+
   # Check if Homebrew is installed
   if [ -x /usr/local/bin/brew ]; then
     echo "Homebrew is already insalled ✓"
@@ -95,6 +111,16 @@ homebrew_install() {
 }
 
 brewcask_install() {
+  echo
+  echo
+  echo ' ▄▄·  ▄▄▄· .▄▄ · ▄ •▄ .▄▄ · '
+  echo '▐█ ▌▪▐█ ▀█ ▐█ ▀. █▌▄▌▪▐█ ▀. '
+  echo '██ ▄▄▄█▀▀█ ▄▀▀▀█▄▐▀▀▄·▄▀▀▀█▄'
+  echo '▐███▌▐█ ▪▐▌▐█▄▪▐█▐█.█▌▐█▄▪▐█'
+  echo '·▀▀▀  ▀  ▀  ▀▀▀▀ ·▀  ▀ ▀▀▀▀ '
+  echo
+  echo
+
   for i in "${brewCaskApps[@]}"
   do
      :
@@ -115,6 +141,14 @@ brewcask_install() {
 }
 
 dep_package_install() {
+  echo
+  echo 
+  echo '┌┬┐┌─┐┌─┐  ┌─┐┌─┐┌─┐┬┌─┌─┐┌─┐┌─┐┌─┐'
+  echo ' ││├┤ ├─┘  ├─┘├─┤│  ├┴┐├─┤│ ┬├┤ └─┐'
+  echo '─┴┘└─┘┴    ┴  ┴ ┴└─┘┴ ┴┴ ┴└─┘└─┘└─┘'
+  echo
+  echo
+
   for i in "${depPkgs[@]}"
   do
      :
@@ -135,6 +169,14 @@ dep_package_install() {
 }
 
 other_package_install() {
+  echo 
+  echo 
+  echo '┌─┐┌┬┐┬ ┬┌─┐┬─┐  ┌─┐┌┬┐┬ ┬┌─┐┌─┐'
+  echo '│ │ │ ├─┤├┤ ├┬┘  └─┐ │ │ │├┤ ├┤ '
+  echo '└─┘ ┴ ┴ ┴└─┘┴└─  └─┘ ┴ └─┘└  └  '
+  echo 
+  echo 
+
   for i in "${otherPkgs[@]}"
   do
      :
@@ -154,14 +196,18 @@ other_package_install() {
   done
 }
 
-node_install() {
-  echo "It seems you don't have Node installed."
-  echo
-  read -p "Install Node? (y/n) " -n 1 answer
-  echo
-  }
-
 dependants_install() {
+  echo
+  echo
+  echo '██████╗ ███████╗██████╗ ███████╗███╗   ██╗██████╗ ███████╗███╗   ██╗ ██████╗██╗███████╗███████╗'
+  echo '██╔══██╗██╔════╝██╔══██╗██╔════╝████╗  ██║██╔══██╗██╔════╝████╗  ██║██╔════╝██║██╔════╝██╔════╝'
+  echo '██║  ██║█████╗  ██████╔╝█████╗  ██╔██╗ ██║██║  ██║█████╗  ██╔██╗ ██║██║     ██║█████╗  ███████╗'
+  echo '██║  ██║██╔══╝  ██╔═══╝ ██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ██║╚██╗██║██║     ██║██╔══╝  ╚════██║'
+  echo '██████╔╝███████╗██║     ███████╗██║ ╚████║██████╔╝███████╗██║ ╚████║╚██████╗██║███████╗███████║'
+  echo '╚═════╝ ╚══════╝╚═╝     ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═══╝ ╚═════╝╚═╝╚══════╝╚══════╝'
+  echo
+  echo
+
 
   # Check for and install script dependant packages
   echo "Installing script dependants / fun commands..."
@@ -222,6 +268,22 @@ dependants_install() {
 }
 
 dev_env_install() {
+  echo
+  echo
+  echo ' _______                              ________                      '
+  echo '/       \                            /        |                     '
+  echo '$$$$$$$  |  ______   __     __       $$$$$$$$/  _______   __     __ '
+  echo '$$ |  $$ | /      \ /  \   /  |      $$ |__    /       \ /  \   /  |'
+  echo '$$ |  $$ |/$$$$$$  |$$  \ /$$/       $$    |   $$$$$$$  |$$  \ /$$/ '
+  echo '$$ |  $$ |$$    $$ | $$  /$$/        $$$$$/    $$ |  $$ | $$  /$$/  '
+  echo '$$ |__$$ |$$$$$$$$/   $$ $$/         $$ |_____ $$ |  $$ |  $$ $$/   '
+  echo '$$    $$/ $$       |   $$$/          $$       |$$ |  $$ |   $$$/    '
+  echo '$$$$$$$/   $$$$$$$/     $/           $$$$$$$$/ $$/   $$/     $/     '
+  echo 
+  echo
+  echo
+  echo
+
   # Check if VIM Plug is installed
   if [ -f ~/.vim/autoload/plug.vim ]; then
     echo "Vim Plug is already insalled ✓"
@@ -267,7 +329,25 @@ dev_env_install() {
   fi
 }
 
+
 fish_install() {
+
+  echo '                  ___
+   ___======____=---=)
+ /T            \_--===)
+ [ \ (0)   \~    \_-==)
+  \      / )J~~    \-=)
+   \\\\___/  )JJ~~~   \)
+    \_____/JJ~~~~~    \\
+    / \  , \J~~~~~     \\
+   (-\)\=|\\\\\~~~~       L__
+   (\\\\)  (\\\\\)_           \==__
+    \V    \\\\\) ===_____   \\\\\\\\\\\\
+           \V)     \_) \\\\\\\\JJ\J\)
+                       /J\JT\JJJJ)
+                       (JJJ| \UUU)
+                        (UU)'
+
   read -p "Install Fish Shell ? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -302,7 +382,7 @@ fish_install() {
 main() {
 
   # Welcome Banner
-  ascii_font
+  welcome
 
   read -p "Are you installing on a mac or linux? (m/l) " -n 1 answer
   echo
