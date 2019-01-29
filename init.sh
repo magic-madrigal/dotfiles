@@ -33,31 +33,35 @@ COLOUR_THEMES="https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master"
 brewCaskApps=( 
   amethyst 
   postman 
+  irvue 
   iterm2 
   font-fira-code 
   font-roboto-mono 
-  dash signal 
+  dash 
+  signal 
   evernote 
   google-chrome 
   mkchromecast 
   kitematic 
+  kitty 
 )
 
-depPkgs=(
-  lolcat
-  cowsay
-  fortune
-  thefuck
-  figlet
-  git
-  hub
-  tmux
-  ranger
-  highlight
+depPkgs=( 
+  lolcat 
+  cowsay 
+  fortune 
+  thefuck 
+  figlet 
+  git 
+  hub 
+  tmux 
+  ranger 
+  highlight 
+  neofetch
 )
 
-otherPkgs=(
-  irssi
+otherPkgs=( 
+  irssi 
 )
 
 # Functions
@@ -110,8 +114,28 @@ brewcask_install() {
   done
 }
 
-package_install() {
-  for i in $1
+dep_package_install() {
+  for i in "${depPkgs[@]}"
+  do
+     :
+     # Checking if package is installed
+     if hash $i 2>/dev/null; then
+       echo "$i is already insalled ✓"
+     else
+       echo "It seems you don't have $i installed."
+       echo
+       read -p "Install $i ? (y/n) " -n 1 answer
+       echo
+       if [[ $answer == "y" || $answer == "Y" ]]; then
+         # Installing package
+         $INSTALL_CMD install $i
+       fi
+     fi
+  done
+}
+
+other_package_install() {
+  for i in "${otherPkgs[@]}"
   do
      :
      # Checking if package is installed
@@ -141,21 +165,21 @@ dependants_install() {
 
   # Check for and install script dependant packages
   echo "Installing script dependants / fun commands..."
-  package_install ${depPkgs[@]}
+  dep_package_install
 
   # Check if repo directory is created
   if [ -d "$REPO_DIR" ]; then
     echo "Repo directory is already created ✓"
-    else
-      mkdir $REPO_DIR
-    fi
+  else
+    mkdir $REPO_DIR
+  fi
 
   # Check if dotfiles directory is created
   if [ -d "$REPO_DIR/dotfiles" ]; then
     echo "dotfiles directory is already created ✓"
-    else
-      git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
-    fi
+  else
+    git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
+  fi
 
   # Check if config directory is created
   if [ -d "~/.confg" ]; then
@@ -167,9 +191,9 @@ dependants_install() {
   # Check if fish directory is created
   if [ -d "~/.config/fish" ]; then
     echo "fish directory is already created ✓"
-    else
-      mkdir ~/.config/fish
-    fi
+  else
+    mkdir ~/.config/fish
+  fi
 
   echo
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
@@ -200,12 +224,12 @@ dependants_install() {
 dev_env_install() {
   # Check if VIM Plug is installed
   if [ -f ~/.vim/autoload/plug.vim ]; then
-      echo "Vim Plug is already insalled ✓"
-    else
-      echo "Installing Vim Plug and Plugins"
-      curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      vim +slient +VimEnter +PlugInstall +qall
-    fi
+    echo "Vim Plug is already insalled ✓"
+  else
+    echo "Installing Vim Plug and Plugins"
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +slient +VimEnter +PlugInstall +qall
+  fi
 
 
   # Install Ruby
@@ -287,7 +311,7 @@ main() {
     INSTALL_CMD=brew
     homebrew_install
     dependants_install
-    package_install "${otherPkgs[@]}"
+    other_package_install
     dev_env_install
     brewcask_install
     fish_install
@@ -297,7 +321,7 @@ main() {
     OS=LINUX
     INSTALL_CMD=apt-get
     dependants_install
-    package_install "${otherPkgs[@]}"
+    other_package_install
     dev_env_install
     fish_install
   else
