@@ -1,14 +1,50 @@
-# rbenv init
-status --is-interactive; and source (rbenv init -|psub)
-
+# other configs
 source ~/.config/fish/kragle.fish
 source ~/.config/fish/artifactory.fish
 source ~/.config/fish/github.fish
 
-test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+# Disable fish greeting
+set fish_greeting ""
+
+# rbenv init
+status --is-interactive; and source (rbenv init -|psub)
+
+# pyenv init
+status --is-interactive; and source (pyenv init -|psub)
+
+# hub settings
+alias git=hub
+
+# node Settings
 set -g fish_user_paths "/usr/local/opt/icu4c/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/icu4c/sbin" $fish_user_paths
-set fish_user_paths ~/.npm-packages/bin
+set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
+
+# git prompt settings
+set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showstashstate 'yes'
+set __fish_git_prompt_showuntrackedfiles 'yes'
+set __fish_git_prompt_describe_style 'branch'
+set __fish_git_prompt_showcolorhints 'yes'
+set __fish_git_prompt_color_branch yellow
+set __fish_git_prompt_show_informative_status 'yes'
+
+function fish_prompt --description 'Write out the prompt'
+  set -l last_status $status
+
+  set_color $fish_color_cwd
+  echo -n (prompt_pwd)
+  set_color normal
+
+  __fish_git_prompt
+
+  if not test $last_status -eq 0
+    set_color $fish_color_error
+  end
+
+  echo -n ' → '
+end
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -17,15 +53,3 @@ set fish_user_paths ~/.npm-packages/bin
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
 
-status --is-interactive; and source (pyenv init -|psub)
-
-export GITHUB_REPO_PATH=/Users/edmadrigal/Repos
-set -gx LDFLAGS "-L/usr/local/opt/zlib/lib"
-set -gx CPPFLAGS "-I/usr/local/opt/zlib/include"
-set -gx PKG_CONFIG_PATH "/usr/local/opt/zlib/lib/pkgconfig"
-
-alias git=hub
-set -g fish_user_paths "/usr/local/opt/icu4c/bin" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/icu4c/sbin" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths

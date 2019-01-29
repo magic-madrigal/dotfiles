@@ -25,43 +25,43 @@
 
 # Configuration
 # -------------
-REPO_DIR="~/Repos"
+REPO_DIR="${HOME}/Repos"
 HOMEBREW="https://raw.githubusercontent.com/Homebrew/install/master/install"
 COLOUR_THEMES="https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master"
 
 # Add brew cask mac apps here!!! - https://github.com/caskroom/homebrew-cask/tree/master/Casks
-brewCaskApps=( 
-  amethyst 
-  postman 
-  irvue 
-  iterm2 
-  font-fira-code 
-  font-roboto-mono 
-  dash 
-  signal 
-  evernote 
-  google-chrome 
-  mkchromecast 
-  kitematic 
-  kitty 
+brewCaskApps=(
+  amethyst
+  postman
+  irvue
+  iterm2
+  font-fira-code
+  font-roboto-mono
+  dash
+  signal
+  evernote
+  google-chrome
+  mkchromecast
+  kitematic
+  kitty
 )
 
-depPkgs=( 
-  lolcat 
-  cowsay 
-  fortune 
-  thefuck 
-  figlet 
-  git 
-  hub 
-  tmux 
-  ranger 
-  highlight 
+depPkgs=(
+  lolcat
+  cowsay
+  fortune
+  thefuck
+  figlet
+  git
+  hub
+  tmux
+  ranger
+  highlight
   neofetch
 )
 
-otherPkgs=( 
-  irssi 
+otherPkgs=(
+  irssi
 )
 
 # Functions
@@ -171,43 +171,43 @@ dependants_install() {
   if [ -d "$REPO_DIR" ]; then
     echo "Repo directory is already created ✓"
   else
-    mkdir $REPO_DIR
+    mkdir "$REPO_DIR"
   fi
 
   # Check if dotfiles directory is created
-  if [ -d "$REPO_DIR/dotfiles" ]; then
+  if [ -d "${REPO_DIR}/dotfiles" ]; then
     echo "dotfiles directory is already created ✓"
   else
     git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
   fi
 
   # Check if config directory is created
-  if [ -d "~/.confg" ]; then
+  if [ -d "${HOME}/.config" ]; then
     echo "config directory is already created ✓"
-    else
-      mkdir ~/.config
-    fi
+  else
+    mkdir "${HOME}/.config"
+  fi
 
   # Check if fish directory is created
-  if [ -d "~/.config/fish" ]; then
+  if [ -d "${HOME}/.config/fish" ]; then
     echo "fish directory is already created ✓"
   else
-    mkdir ~/.config/fish
+    mkdir "${HOME}/.config/fish"
   fi
 
   echo
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y"  ]]; then
-    ln -s ~/$REPO_DIR/dotfiles/hub                        ~/hub
-    ln -s ~/$REPO_DIR/dotfiles/tmux.conf                  ~/.tmux.conf
-    ln -s ~/$REPO_DIR/dotfiles/vimrc                      ~/.vimrc
-    ln -s ~/$REPO_DIR/dotfiles/config/fish/config.fish    ~/config/fish/config.fish
-    ln -s ~/$REPO_DIR/dotfiles/config/git/config          ~/config/git/config
-    ln -s ~/$REPO_DIR/dotfiles/config/git/ignore          ~/config/git/ignore
-    ln -s ~/$REPO_DIR/dotfiles/config/ranger/rc.conf      ~/config/ranger/rc.conf
-    ln -s ~/$REPO_DIR/dotfiles/config/ranger/scope.conf   ~/config/ranger/scope.conf
-    ln -s ~/$REPO_DIR/dotfiles/config/omf                 ~/config/omf
+    ln -s "$REPO_DIR/dotfiles/hub"                        "${HOME}/hub"
+    ln -s "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
+    ln -s "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
+    ln -s "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
+    ln -s "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
+    ln -s "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
+    ln -s "$REPO_DIR/dotfiles/config/ranger/rc.conf"      "${HOME}/.config/ranger/rc.conf"
+    ln -s "$REPO_DIR/dotfiles/config/ranger/scope.conf"   "${HOME}/.config/ranger/scope.conf"
+    ln -s "$REPO_DIR/dotfiles/config/omf"                 "${HOME}/.config/omf"
   fi
 
   read -p "Install Powerline Fonts ? (y/n) " -n 1 answer
