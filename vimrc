@@ -14,7 +14,8 @@ call plug#begin()
 
 " Visual
 Plug 'bling/vim-airline'               " Improved status line
-Plug 'scrooloose/nerdtree'             " Adds file browser window
+Plug 'francoiscabrol/ranger.vim'       " Adds file browser window that lets you view files
+Plug 'scrooloose/nerdtree'             " Adds file browser sidebar
 Plug 'junegunn/fzf'                    " Adds fuzzy finder
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'                        " Shows inline lint errors
@@ -56,10 +57,10 @@ Plug 'mklabs/jscs.vim', { 'do': 'npm i jscs -g' } " JSCS for vim
 " Plug 'mxw/vim-jsx'
 
 " Colorschemes
+Plug 'felixhummel/setcolors.vim'       " :SetColors all then F8 to switch colorschemes
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ajh17/Spacegray.vim'
 Plug 'rakr/vim-one'
-" Plug 'felixhummel/setcolors.vim'       " :SetColors all then F8 to switch colorschemes
 " Plug 'daviddavis/vim-colorpack'
 " Plug 'noahfrederick/vim-hemisu'
 " Plug 'junegunn/seoul256.vim'
@@ -317,6 +318,10 @@ let g:which_key_map.p.i = 'install-plugins'
 let g:which_key_map.p.c = 'clean-plugins'
 let g:which_key_map.p.u = 'update-plugins'
 
+let g:which_key_map.r = { 'name' : '+ranger' }
+let g:which_key_map.r.n = 'ranger-new-tab'
+let g:which_key_map.r.t = 'ranger-toggle'
+
 let g:which_key_map.t = { 'name' : '+terminal' }
 let g:which_key_map.t.d = 'docker-compose-build'
 let g:which_key_map.t.n = 'npm-install'
@@ -356,8 +361,8 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Powerline fonts
-" let g:airline_powerline_fonts = 1
-" let g:Powerline_symbols = 'unicode'
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols = 'unicode'
 
 "----------------------------------------------------------
 " Ale Settings
@@ -456,6 +461,15 @@ noremap <leader>gt :Git tree --all<cr>
 "----------------------------------------------------------
 
 noremap <leader>gv :GV --all<cr>
+
+"----------------------------------------------------------
+" Ranger Settings
+"----------------------------------------------------------
+
+let g:ranger_map_keys = 0
+
+nnoremap <leader>rt :Ranger<CR>
+nnoremap <leader>rn :RangerNewTab<CR>
 
 "----------------------------------------------------------
 " SimpleSmoothScroll Settings
