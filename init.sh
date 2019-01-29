@@ -141,7 +141,7 @@ dependants_install() {
 
   # Check for and install script dependant packages
   echo "Installing script dependants / fun commands..."
-  package_install "${depPkgs[@]}"
+  package_install ${depPkgs[@]}
 
   # Check if repo directory is created
   if [ -d "$REPO_DIR" ]; then
@@ -172,7 +172,7 @@ dependants_install() {
     fi
 
   echo
-  read -p "Create symlinks for all dotfiles?" -n 1 answer
+  read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y"  ]]; then
     ln -s ~/$REPO_DIR/dotfiles/hub                        ~/hub
