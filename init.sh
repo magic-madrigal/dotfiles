@@ -33,7 +33,6 @@ COLOUR_THEMES="https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master"
 brewCaskApps=(
   amethyst
   postman
-  irvue
   iterm2
   font-fira-code
   font-roboto-mono
