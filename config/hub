@@ -1,0 +1,4 @@
+github.com:
+- user: magic-madrigal
+  oauth_token: XXXXXXXXXXXXXX
+  protocol: https
