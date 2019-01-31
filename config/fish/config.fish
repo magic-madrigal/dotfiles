@@ -11,8 +11,7 @@ status --is-interactive; and source (pyenv init -|psub)
 alias git=hub
 
 # node Settings
-set -g fish_user_paths "/usr/local/opt/icu4c/bin" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/icu4c/sbin" $fish_user_paths
+set -g fish_user_paths "$HOME/.npm-packages/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
 
