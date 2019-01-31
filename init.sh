@@ -57,6 +57,7 @@ depPkgs=(
   ranger
   highlight
   neofetch
+  sgc
 )
 
 otherPkgs=(
@@ -375,6 +376,7 @@ dev_env_install() {
       $INSTALL_CMD install nvm
       mkdir ~/.nvm
       nvm install node@8
+      npm i -g semantic-git-commit-cli
     fi
   fi
 
