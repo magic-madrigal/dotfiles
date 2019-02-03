@@ -442,6 +442,7 @@ fish_install() {
 }
 
 main() {
+  clear
 
   # Welcome Banner
   welcome
