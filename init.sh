@@ -446,12 +446,14 @@ main() {
   # Welcome Banner
   welcome
 
-  echo "We haven't built OS detection yet so...."
+  echo "We haven't built OS detection yet so... what are we looking at?"
   echo
   echo "(1) Mac OS"
   echo "(2) Ubuntu or other debian system"
   echo "(3) Arch Linux ~-==>"
-  read -p "Pick your poison?" -n 1 answer
+  echo
+  echo
+  read -p "Pick your poison ~> " -n 1 answer
   echo
 
   # Mac OS
