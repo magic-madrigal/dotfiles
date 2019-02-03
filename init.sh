@@ -459,7 +459,7 @@ main() {
   # Mac OS
   if [[ $answer == "1" ]]; then
     OS=MAC
-    INSTALL_CMD=brew install
+    INSTALL_CMD="brew install"
     homebrew_install
     dependants_install
     other_package_install
@@ -471,7 +471,7 @@ main() {
   # Ubuntu or debian system
   if [[ $answer == "2" ]]; then
     OS=LINUX
-    INSTALL_CMD=apt-get install
+    INSTALL_CMD="apt-get install"
     dependants_install
     other_package_install
     dev_env_install
@@ -483,7 +483,7 @@ main() {
   # Arch Linux
   if [[ $answer == "3" ]]; then
     OS=LINUX
-    INSTALL_CMD=pacman -S
+    INSTALL_CMD="pacman -S"
     dependants_install
     other_package_install
     dev_env_install
