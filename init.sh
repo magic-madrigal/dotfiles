@@ -481,7 +481,7 @@ main() {
   fi
 
   # Arch Linux
-  if [[ $answer == "2" ]]; then
+  if [[ $answer == "3" ]]; then
     OS=LINUX
     INSTALL_CMD=pacman -S
     dependants_install
