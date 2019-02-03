@@ -476,8 +476,6 @@ main() {
     other_package_install
     dev_env_install
     fish_install
-  else
-    echo "OS not supported!"
   fi
 
   # Arch Linux
