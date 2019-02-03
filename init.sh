@@ -236,7 +236,6 @@ dependants_install() {
     echo "dotfiles directory is already created ✓"
   else
     echo
-    echo
     echo "Cloneing dotfiles repo!"
     echo
     git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
@@ -272,14 +271,6 @@ dependants_install() {
   else
     mkdir "${HOME}/.config/ranger"
     echo "Made .config/ranger directory ✓"
-  fi
-
-  # Check if omf directory is created
-  if [ -d "${HOME}/.config/omf" ]; then
-    echo "omf directory is already created ✓"
-  else
-    mkdir "${HOME}/.config/omf"
-    echo "Made .config/omf directory ✓"
   fi
 
   echo
