@@ -242,6 +242,11 @@ nnoremap ]B :blast<cr>
 " Turn off search highlight
 nnoremap <leader>c :nohlsearch<cr>
 
+" File management and quick quit
+nnoremap <leader>s :w<cr>
+nnoremap <leader>qq :q<cr>
+nnoremap <leader>q1 :q!<cr>
+
 " Open vimrc in a new tab
 nnoremap <leader>ve :tabe $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
@@ -318,9 +323,15 @@ let g:which_key_map.p.i = 'install-plugins'
 let g:which_key_map.p.c = 'clean-plugins'
 let g:which_key_map.p.u = 'update-plugins'
 
+let g:which_key_map.q = { 'name' : '+quit' }
+let g:which_key_map.qq = 'quit'
+let g:which_key_map.q1 = 'quit without save'
+
 let g:which_key_map.r = { 'name' : '+ranger' }
 let g:which_key_map.r.n = 'ranger-new-tab'
 let g:which_key_map.r.t = 'ranger-toggle'
+
+let g:which_key_map.s = 'Save'
 
 let g:which_key_map.t = { 'name' : '+terminal' }
 let g:which_key_map.t.d = 'docker-compose-build'

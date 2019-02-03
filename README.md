@@ -1,16 +1,40 @@
 # dotfiles
 
-my workstation configuration
+Welcome to my dotfiles repo! \o/ 
 
-## Fonts
+Here you will find my collection of settings and preferences for various applications and shells.
 
-- Robot Mono
-- Fira Code
+This repo also includes an automated initialization script which will allow you to setup your workstation in no time. This script is meant to be interactive and doesn't install anything without consent.
+
+## Usage
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/init.sh)
+```
+
+# Install Process
++ Install Homebrew (MacOS Only)
++ Install Core Packages
++ Install Other Packages
++ Install Mac Apps (MacOS Only)
++ Install Devtools (NodeJS, Python, Ruby, AWSCLI)
++ Install Vim and configure
++ Setup Github SSH keys
++ Install Fish Shell
+
+## Supported Operating Systems
++ Mac OS
++ Ubuntu or Debian Linux
++ Arch Linux
 
 ## Mac Apps
-
++ Dash
++ Signal
++ Evernote
 + Google Chrome
 + Xcode Cli Tools
++ mkchromecast
++ kitty
 + [iTerm2](https://www.iterm2.com/)
 + [Kitematic](https://kitematic.com/) for Docker containers
 + [Sequel Pro](https://www.sequelpro.com/) for MySQL
@@ -19,17 +43,3 @@ my workstation configuration
 + [Amethyst](https://github.com/ianyh/Amethyst) window manager
 + [Irvue](http://irvue.tumblr.com/)
 
-## Setup
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/init.sh)
-```
-
-## Italics in iTerm and Tmux
-
-https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
-
-```bash
-tic -x xterm-256color-italic.terminfo
-tic -x tmux-256color.terminfo
-```
