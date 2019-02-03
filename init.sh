@@ -162,7 +162,7 @@ dep_package_install() {
        echo
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing package
-         $INSTALL_CMD install $i
+         $INSTALL_CMD $i
        fi
      fi
   done
@@ -190,7 +190,7 @@ other_package_install() {
        echo
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing package
-         $INSTALL_CMD install $i
+         $INSTALL_CMD $i
        fi
      fi
   done
@@ -446,11 +446,18 @@ main() {
   # Welcome Banner
   welcome
 
-  read -p "Are you installing on a mac or linux? (m/l) " -n 1 answer
+  echo "We haven't built OS detection yet so...."
   echo
-  if [[ $answer == "m" || $answer == "M" ]]; then
+  echo "(1) Mac OS"
+  echo "(2) Ubuntu or other debian system"
+  echo "(3) Arch Linux ~-==>"
+  read -p "Pick your poison?" -n 1 answer
+  echo
+
+  # Mac OS
+  if [[ $answer == "1" ]]; then
     OS=MAC
-    INSTALL_CMD=brew
+    INSTALL_CMD=brew install
     homebrew_install
     dependants_install
     other_package_install
@@ -459,9 +466,10 @@ main() {
     fish_install
   fi
 
-  if [[ $answer == "l" || $answer == "L" ]]; then
+  # Ubuntu or debian system
+  if [[ $answer == "2" ]]; then
     OS=LINUX
-    INSTALL_CMD=apt-get
+    INSTALL_CMD=apt-get install
     dependants_install
     other_package_install
     dev_env_install
@@ -469,6 +477,19 @@ main() {
   else
     echo "OS not supported!"
   fi
+
+  # Arch Linux
+  if [[ $answer == "2" ]]; then
+    OS=LINUX
+    INSTALL_CMD=pacman -S
+    dependants_install
+    other_package_install
+    dev_env_install
+    fish_install
+  else
+    echo "OS not supported!"
+  fi
+
 
 
 echo "Setup finished!! For further information I recommend reading the Fish Shell documentation." | lolcat | cowsay -f tux
