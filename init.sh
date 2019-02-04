@@ -154,6 +154,8 @@ dep_package_install() {
      if hash $i 2>/dev/null; then
        echo "$i is already insalled ✓"
      else
+       echo
+       echo
        echo "It seems you don't have $i installed."
        echo
        read -p "Install $i ? (y/n) " -n 1 answer
@@ -182,6 +184,8 @@ other_package_install() {
      if hash $i 2>/dev/null; then
        echo "$i is already insalled ✓"
      else
+       echo
+       echo
        echo "It seems you don't have $i installed."
        echo
        read -p "Install $i ? (y/n) " -n 1 answer
@@ -208,13 +212,20 @@ dependants_install() {
 
 
   # Check for and install script dependant packages
-  echo "Installing script dependants / fun commands..."
+  echo "Installing script dependancies / fun commands..."
   dep_package_install
 
+  echo
+  echo "Script Dependancies Completed!!"
+  echo
+ 
   # Check if repo directory is created
   if [ -d "$REPO_DIR" ]; then
     echo "Repo directory is already created ✓"
   else
+    echo
+    echo "Createing Repo Directory"
+    echo
     mkdir "$REPO_DIR"
   fi
 
@@ -222,6 +233,9 @@ dependants_install() {
   if [ -d "${REPO_DIR}/dotfiles" ]; then
     echo "dotfiles directory is already created ✓"
   else
+    echo
+    echo "Cloneing dotfiles repo!"
+    echo
     git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
   fi
 
@@ -230,6 +244,7 @@ dependants_install() {
     echo "config directory is already created ✓"
   else
     mkdir "${HOME}/.config"
+    echo "Made .config directory ✓"
   fi
 
   # Check if fish directory is created
@@ -237,6 +252,23 @@ dependants_install() {
     echo "fish directory is already created ✓"
   else
     mkdir "${HOME}/.config/fish"
+    echo "Made .config/fish directory ✓"
+  fi
+
+  # Check if git directory is created
+  if [ -d "${HOME}/.config/git" ]; then
+    echo "git directory is already created ✓"
+  else
+    mkdir "${HOME}/.config/git"
+    echo "Made .config/git directory ✓"
+  fi
+
+  # Check if ranger directory is created
+  if [ -d "${HOME}/.config/ranger" ]; then
+    echo "ranger directory is already created ✓"
+  else
+    mkdir "${HOME}/.config/ranger"
+    echo "Made .config/ranger directory ✓"
   fi
 
   echo
