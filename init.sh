@@ -238,7 +238,7 @@ dependants_install() {
     echo
     echo "Cloneing dotfiles repo!"
     echo
-    git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR
+    git clone https://github.com/magic-madrigal/dotfiles $REPO_DIR/dotfiles
   fi
 
   # Check if config directory is created
