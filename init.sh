@@ -418,7 +418,7 @@ dev_env_install() {
       echo "docker is already insalled ✓"
     else
       $INSTALL_CMD docker
-      curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      $INSTALL_CMD docker-compose
       read -p "What is the name of the user you would like to add to the docker group? " username
       usermod -aG docker ${username}
     fi
