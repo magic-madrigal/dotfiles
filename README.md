@@ -27,19 +27,28 @@ bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/
 + Ubuntu or Debian Linux
 + Arch Linux
 
+## Shell
++ [Fish](https://fishshell.com/)
++ [Oh My Fish!](https://github.com/oh-my-fish/oh-my-fish)
++ [Fisher](https://github.com/jorgebucaran/fisher)
+
+## Text Editor
++ [Vim](https://www.vim.org/)
++ [Plug](https://github.com/junegunn/vim-plug) • Vim Plugin Manager (See .vimrc for plugins)
+
 ## Mac Apps
-+ Dash
-+ Signal
-+ Evernote
-+ Google Chrome
-+ Xcode Cli Tools
-+ mkchromecast
-+ kitty
++ [Dash](https://kapeli.com/dash)
++ [Signal](https://signal.org/)
++ [Evernote](https://evernote.com/)
++ [Google Chrome](https://www.google.com/chrome/)
++ [Xcode Cli Tools](https://developer.apple.com/download/more/)
++ [mkchromecast](https://mkchromecast.com/)
++ [kitty](https://sw.kovidgoyal.net/kitty/)
 + [iTerm2](https://www.iterm2.com/)
 + [Kitematic](https://kitematic.com/) for Docker containers
 + [Sequel Pro](https://www.sequelpro.com/) for MySQL
 + [robo 3T](https://robomongo.org/) for MongoDB
 + [Postman](https://www.getpostman.com/)
 + [Amethyst](https://github.com/ianyh/Amethyst) window manager
-+ [Irvue](http://irvue.tumblr.com/)
++ [Irvue](http://irvue.tumblr.com/) • Manual install
 

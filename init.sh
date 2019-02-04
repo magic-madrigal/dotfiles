@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 # Author    Magic Madrigal
@@ -57,7 +56,6 @@ depPkgs=(
   ranger
   highlight
   neofetch
-  sgc
 )
 
 otherPkgs=(
@@ -259,7 +257,7 @@ dependants_install() {
   read -p "Install Powerline Fonts ? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    $INSTALL_CMD install fontconfig
+    $INSTALL_CMD fontconfig
     cp /usr/local/etc/fonts/fonts.conf.bak /usr/local/etc/fonts/fonts.conf
 
     git clone https://github.com/powerline/fonts.git ./fonts
@@ -292,6 +290,7 @@ dev_env_install() {
     echo "Vim Plug is already insalled ✓"
   else
     echo "Installing Vim Plug and Plugins"
+    $INSTALL_CMD vim
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     vim +slient +VimEnter +PlugInstall +qall
   fi
@@ -359,7 +358,7 @@ dev_env_install() {
     if [ -x /usr/local/bin/rbenv ]; then
       echo "Ruby & rbenv is already insalled ✓"
     else
-      $INSTALL_CMD install rbenv
+      $INSTALL_CMD rbenv
       rbenv install 2.3.3
       rbenv global 2.3.3
     fi
@@ -373,19 +372,36 @@ dev_env_install() {
     if [ -x /usr/local/bin/node ]; then
       echo "Node is already insalled ✓"
     else
-      $INSTALL_CMD install nvm
+      $INSTALL_CMD nvm
       mkdir ~/.nvm
       nvm install node@8
       npm i -g semantic-git-commit-cli
     fi
   fi
 
+  # Install docker
+  echo
+  read -p "Install docker and docker-compose? (y/n) " -n 1 answer
+  echo
+  if [[ $answer == "y" || $answer == "Y" ]]; then
+    if [ -x /usr/local/bin/docker ]; then
+      echo "docker is already insalled ✓"
+    else
+      curl -fsSL get.docker.com -o get-docker.sh
+      sh get-docker.sh
+      curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      read -p "What is the name of the user you would like to add to the docker group? " username
+      usermod -aG ${username} pi
+    fi
+  fi
+
+ 
   # Checking for AWS CLI
   echo
   if [ -x /usr/local/bin/aws ]; then
     echo "AWS CLI is already insalled ✓"
   else
-    $INSTALL_CMD install awscli
+    $INSTALL_CMD awscli
     echo "Don't forget to run aws configure!!!" | lolcat
   fi
 }
@@ -413,7 +429,7 @@ fish_install() {
   read -p "Install Fish Shell ? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    $INSTALL_CMD install fish --HEAD
+    $INSTALL_CMD fish --HEAD
 
     read -p "Would you like to make fish your default shell? (y/n) " -n 1 answer
     echo
