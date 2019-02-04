@@ -277,7 +277,7 @@ dependants_install() {
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y"  ]]; then
-    ln -s "$REPO_DIR/dotfiles/hub"                        "${HOME}/hub"
+    ln -s "$REPO_DIR/dotfiles/hub"                        "${HOME}/.hub"
     ln -s "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
     ln -s "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
     ln -s "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
