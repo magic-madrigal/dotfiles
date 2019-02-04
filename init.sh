@@ -277,15 +277,15 @@ dependants_install() {
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y"  ]]; then
-    ln -s "$REPO_DIR/dotfiles/hub"                        "${HOME}/.hub"
-    ln -s "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
-    ln -s "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
-    ln -s "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
-    ln -s "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
-    ln -s "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
-    ln -s "$REPO_DIR/dotfiles/config/ranger/rc.conf"      "${HOME}/.config/ranger/rc.conf"
-    ln -s "$REPO_DIR/dotfiles/config/ranger/scope.conf"   "${HOME}/.config/ranger/scope.conf"
-    ln -s "$REPO_DIR/dotfiles/config/omf"                 "${HOME}/.config/omf"
+    ln -sf "$REPO_DIR/dotfiles/hub"                        "${HOME}/.hub"
+    ln -sf "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
+    ln -sf "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
+    ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
+    ln -sf "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
+    ln -sf "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
+    ln -sf "$REPO_DIR/dotfiles/config/ranger/rc.conf"      "${HOME}/.config/ranger/rc.conf"
+    ln -sf "$REPO_DIR/dotfiles/config/ranger/scope.conf"   "${HOME}/.config/ranger/scope.conf"
+    ln -sf "$REPO_DIR/dotfiles/config/omf"                 "${HOME}/.config/omf"
   fi
 
   read -p "Install Powerline Fonts ? (y/n) " -n 1 answer
