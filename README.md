@@ -46,8 +46,6 @@ bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/
 + [kitty](https://sw.kovidgoyal.net/kitty/)
 + [iTerm2](https://www.iterm2.com/)
 + [Kitematic](https://kitematic.com/) for Docker containers
-+ [Sequel Pro](https://www.sequelpro.com/) for MySQL
-+ [robo 3T](https://robomongo.org/) for MongoDB
 + [Postman](https://www.getpostman.com/)
 + [Amethyst](https://github.com/ianyh/Amethyst) window manager
 + [Irvue](http://irvue.tumblr.com/) • Manual install
