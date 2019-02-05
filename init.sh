@@ -61,6 +61,7 @@ depPkgs=(
 otherPkgs=(
   irssi
   htop
+  gtop
   ncdu
 )
 
