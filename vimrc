@@ -18,6 +18,7 @@ Plug 'francoiscabrol/ranger.vim'       " Adds file browser window that lets you 
 Plug 'scrooloose/nerdtree'             " Adds file browser sidebar
 Plug 'junegunn/fzf'                    " Adds fuzzy finder
 Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'w0rp/ale'                        " Shows inline lint errors
 Plug 'liuchengxu/vim-which-key'        " Displays mappings for <leader> in window
 Plug 'Kazark/vim-SimpleSmoothScroll'   " Slows down scroll speed
@@ -497,13 +498,11 @@ map <ScrollWheelDown> <C-E>
 " let g:syntastic_always_populate_loc_list = 1
 
 "----------------------------------------------------------
-" Vim Javascript Settings
+" Persistant Undo
 "----------------------------------------------------------
 
-if has("persistent_undo")
-    set undodir=~/.undodir/
+    set undodir=~/.vim/.undodir/
     set undofile
-endif
 
 "----------------------------------------------------------
 " Vim Javascript Settings
