@@ -49,4 +49,9 @@ bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/
 + [Postman](https://www.getpostman.com/)
 + [Amethyst](https://github.com/ianyh/Amethyst) window manager
 + [Irvue](http://irvue.tumblr.com/) • Manual install
++ [Dozer](https://github.com/Mortennn/Dozer) • Manual install
++ [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term) • Manual install
++ [Cathode](http://www.secretgeometry.com/apps/cathode/) • Manual install
+
+
 
