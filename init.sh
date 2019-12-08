@@ -18,7 +18,7 @@
 # - Powerline Fonts:        https://github.com/powerline/fonts
 # - Node                    https://nodejs.org/en/
 # - rbenv                   https://github.com/rbenv/rbenv
-# - amethyst                https://github.com/ianyh/Amethyst
+# - Better Touch Tool       https://folivora.ai/
 # - signal                  https://github.com/signalapp
 # - tmux settings           https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
 
@@ -30,18 +30,21 @@ COLOUR_THEMES="https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master"
 
 # Add brew cask mac apps here!!! - https://github.com/caskroom/homebrew-cask/tree/master/Casks
 brewCaskApps=(
-  amethyst
-  postman
-  iterm2
+  bettertouchtool
+  dash
+  evernote
   font-fira-code
   font-roboto-mono
-  dash
-  signal
-  evernote
   google-chrome
-  mkchromecast
+  iterm2
   kitematic
   kitty
+  mkchromecast
+  notion
+  postman
+  signal
+  slack
+  spotify
 )
 
 depPkgs=(
