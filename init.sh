@@ -33,6 +33,7 @@ brewCaskApps=(
   bettertouchtool
   dash
   evernote
+  flux
   font-fira-code
   font-roboto-mono
   google-chrome
@@ -110,6 +111,8 @@ homebrew_install() {
       brew upgrade
       echo "installing caskroom"
       brew tap caskroom/cask
+      brew tap homebrew/cask-fonts
+      brew update
       echo "Homebrew and Caskroom insalled ✓"
     fi
 }
@@ -516,6 +519,7 @@ main() {
     dev_env_install
     brewcask_install
     fish_install
+    defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'; killall Dock
   fi
 
   # Ubuntu or debian system
