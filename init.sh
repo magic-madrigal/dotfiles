@@ -38,11 +38,13 @@ brewCaskApps=(
   font-roboto-mono
   google-chrome
   iterm2
+  keybase
   kitematic
   kitty
   mkchromecast
   notion
   postman
+  rekordbox
   signal
   slack
   spotify
