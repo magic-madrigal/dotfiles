@@ -519,7 +519,26 @@ main() {
     dev_env_install
     brewcask_install
     fish_install
-    defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'; killall Dock
+    
+    read -p "Would you like to show hidden files? (y/n)" -n 1 answer
+    echo
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+      defaults write com.apple.finder AppleShowAllFiles YES
+    fi
+
+    read -p "Would you like to increate your keyboard repeat speed? (y/n)" -n 1 answer
+    echo
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+      defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+      defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+      echo "These settings don't take effect until you log back in" | lolcat
+    fi 
+    
+    read -p "Would you like a recently used apps collection in your dock? (y/n)" -n 1 answer
+    echo
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+      defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'; killall Dock
+    fi
   fi
 
   # Ubuntu or debian system
