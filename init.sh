@@ -136,7 +136,7 @@ brewcask_install() {
   do
      :
      # Checking cask app
-     if brew cask list $i; then
+     if brew list $i --cask; then
        echo "$i is already insalled ✓"
      else
        echo "It seems you don't have $i installed."
@@ -145,7 +145,7 @@ brewcask_install() {
        echo
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing cask app
-         brew cask install $i
+         brew install $i --cask
        fi
      fi
   done
