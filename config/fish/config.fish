@@ -1,6 +1,9 @@
 # Disable fish greeting
 set fish_greeting ""
 
+# SSH Agent
+eval (ssh-agent -c)
+
 # rbenv init
 # status --is-interactive; and source (rbenv init -|psub)
 
@@ -9,6 +12,9 @@ status --is-interactive; and source (pyenv init -|psub)
 
 # hub settings
 alias git=hub
+
+# java version for SuiteCloud CLI Dev
+# set -x JAVA_HOME "/usr/libexec/java_home -v 11.0.15.1"
 
 # node Settings
 set -g fish_user_paths "$HOME/.npm-packages/bin" $fish_user_paths
