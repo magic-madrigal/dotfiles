@@ -114,7 +114,7 @@ homebrew_install() {
       brew update
       brew upgrade
       echo "installing caskroom"
-      brew tap caskroom/cask
+      brew tap homebrew/cask
       brew tap homebrew/cask-fonts
       brew update
       echo "Homebrew and Caskroom insalled ✓"
