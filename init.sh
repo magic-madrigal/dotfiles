@@ -391,6 +391,20 @@ dev_env_install() {
     echo
   fi
 
+  # Install Pyenv
+  echo
+  read -p "Install Python and pyenv? (y/n) " -n 1 answer
+  echo
+  if [[ $answer == "y" || $answer == "Y" ]]; then
+    if [ -x /usr/local/bin/pyenv ]; then
+      echo "Python & pyenv is already insalled ✓"
+    else
+      $INSTALL_CMD pyenv
+      pyenv install 3.10.4
+      pyenv global 3.10.4
+    fi
+  fi
+
   # Install Ruby
   echo
   read -p "Install Ruby and rbenv? (y/n) " -n 1 answer
