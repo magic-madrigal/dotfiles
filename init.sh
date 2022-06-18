@@ -146,6 +146,9 @@ brewcask_install() {
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing cask app
          brew install $i --cask
+         if [[ $i == "bettertouchtool"]]; then
+           cp ${HOME}/.config/btt/Default.bttpreset  ~/Library/Application\ Support/BetterTouchTool/Default.bttpreset
+         fi
        fi
      fi
   done
@@ -265,6 +268,8 @@ dependants_install() {
     echo "fish directory is already created ✓"
   else
     mkdir "${HOME}/.config/fish"
+    touch "${HOME}/.config/reddit.fish"
+    touch "${HOME}/.config/artifactory.fish"
     echo "Made .config/fish directory ✓"
   fi
 
