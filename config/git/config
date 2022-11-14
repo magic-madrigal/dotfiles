@@ -1,6 +1,5 @@
 [user]
-  email = heriberto.madrigal@gmail.com
-  name = Magic Madrigal
+	email = 3331780+magic-madrigal@users.noreply.github.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRVtm9uRAKLFXBaoBSBFYctEx3wmIjTJNo2l6xK86Hd
 [color]
   ui = true
@@ -19,6 +18,10 @@
   tree = log --graph --decorate --oneline --abbrev-commit
   # Delete local branches that are already merged to master
   cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [gpg]
 	format = ssh
 [gpg "ssh"]

@@ -290,6 +290,14 @@ dependants_install() {
     echo "Made .config/ranger directory ✓"
   fi
 
+  # Check if ssh directory is created
+  if [ -d "${HOME}/.ssh" ]; then
+    echo ".ssh directory is already created ✓"
+  else
+    mkdir "${HOME}/.ssh"
+    echo "Made .ssh directory ✓"
+  fi
+
   echo
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
@@ -297,6 +305,7 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/hub"                        "${HOME}/.hub"
     ln -sf "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
     ln -sf "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
+    ln -sf "$REPO_DIR/dotfiles/ssh_config"                 "${HOME}/.ssh/config"
     ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
     ln -sf "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
     ln -sf "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
@@ -352,6 +361,11 @@ dev_env_install() {
   echo "$(cat ${REPO_DIR}/dotfiles/misc/octocat.asciiart)"
   echo
   echo
+  echo 'Setting up 1Password Agent'
+  echo 
+  export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  :' Commented and replaced with 1password SSH agent - symlink added above as well - 11.13.2022
+
   read -p "Would you like to setup Github? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -396,6 +410,7 @@ dev_env_install() {
     echo
     echo
   fi
+  '
 
   # Install Pyenv
   echo

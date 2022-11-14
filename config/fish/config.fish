@@ -1,6 +1,9 @@
 # Disable fish greeting
 set fish_greeting ""
 
+# Reddit Stuff
+set -p fish_user_paths "/opt/homebrew/bin"
+
 # SSH Agent
 eval (ssh-agent -c)
 
