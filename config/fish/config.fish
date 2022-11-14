@@ -1,6 +1,9 @@
 # Disable fish greeting
 set fish_greeting ""
 
+# 1password SSH auth agent
+set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
 # rbenv init
 status --is-interactive; and source (rbenv init -|psub)
 
