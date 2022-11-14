@@ -1,5 +1,11 @@
 # Disable fish greeting
-set fish_greeting ""
+set fish_greeting "
+ __    __     ______     ______     __     ______    
+/\ '-./  \   /\  __ \   /\  ___\   /\ \   /\  ___\   
+\ \ \-./\ \  \ \  __ \  \ \ \__ \  \ \ \  \ \ \____  
+ \ \_\ \ \_\  \ \_\ \_\  \ \_____\  \ \_\  \ \_____\ 
+  \/_/  \/_/   \/_/\/_/   \/_____/   \/_/   \/_____/ 
+"
 
 # 1password SSH auth agent
 set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -56,7 +62,7 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 # Github Creds
-source ~/.config/fish/github.fish
+# source ~/.config/fish/github.fish
 
 # other configs
 # source ~/.config/fish/artifactory.fish
