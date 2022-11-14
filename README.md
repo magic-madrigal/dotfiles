@@ -34,12 +34,14 @@ bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/
 
 ## Text Editor
 + [Vim](https://www.vim.org/)
++ [vscode](https://code.visualstudio.com/)
 + [Plug](https://github.com/junegunn/vim-plug) • Vim Plugin Manager (See .vimrc for plugins)
 
 ## Mac Apps
 + [Dash](https://kapeli.com/dash)
 + [Signal](https://signal.org/)
 + [Evernote](https://evernote.com/)
++ [1password](https://1password.com/)
 + [Google Chrome](https://www.google.com/chrome/)
 + [Xcode Cli Tools](https://developer.apple.com/download/more/)
 + [mkchromecast](https://mkchromecast.com/)
