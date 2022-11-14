@@ -47,8 +47,8 @@ end
 source ~/.config/fish/github.fish
 
 # other configs
-source ~/.config/fish/artifactory.fish
-source ~/.config/fish/zendesk.fish
+# source ~/.config/fish/artifactory.fish
+# source ~/.config/fish/reddit.fish
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -57,3 +57,4 @@ source ~/.config/fish/zendesk.fish
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
 
+fish_add_path /usr/local/opt/bzip2/bin

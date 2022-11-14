@@ -1,6 +1,7 @@
 [user]
   email = heriberto.madrigal@gmail.com
   name = Magic Madrigal
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRVtm9uRAKLFXBaoBSBFYctEx3wmIjTJNo2l6xK86Hd
 [color]
   ui = true
 [core]
@@ -18,3 +19,9 @@
   tree = log --graph --decorate --oneline --abbrev-commit
   # Delete local branches that are already merged to master
   cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
