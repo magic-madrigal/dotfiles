@@ -4,14 +4,23 @@ set fish_greeting ""
 # 1password SSH auth agent
 set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
+# Reddit Stuff
+set -p fish_user_paths "/opt/homebrew/bin"
+
+# SSH Agent
+eval (ssh-agent -c)
+
 # rbenv init
-status --is-interactive; and source (rbenv init -|psub)
+# status --is-interactive; and source (rbenv init -|psub)
 
 # pyenv init
 status --is-interactive; and source (pyenv init -|psub)
 
 # hub settings
 alias git=hub
+
+# java version for SuiteCloud CLI Dev
+# set -x JAVA_HOME "/usr/libexec/java_home -v 11.0.15.1"
 
 # node Settings
 set -g fish_user_paths "$HOME/.npm-packages/bin" $fish_user_paths
@@ -53,11 +62,12 @@ source ~/.config/fish/github.fish
 # source ~/.config/fish/artifactory.fish
 # source ~/.config/fish/reddit.fish
 
+
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.fish
+# [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.fish
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
+# [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
 
 fish_add_path /usr/local/opt/bzip2/bin

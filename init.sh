@@ -38,6 +38,7 @@ brewCaskApps=(
   font-fira-code
   font-roboto-mono
   google-chrome
+  grammarly
   iterm2
   keybase
   kitematic
@@ -114,7 +115,7 @@ homebrew_install() {
       brew update
       brew upgrade
       echo "installing caskroom"
-      brew tap caskroom/cask
+      brew tap homebrew/cask
       brew tap homebrew/cask-fonts
       brew update
       echo "Homebrew and Caskroom insalled ✓"
@@ -136,7 +137,7 @@ brewcask_install() {
   do
      :
      # Checking cask app
-     if brew cask list $i; then
+     if brew list $i --cask; then
        echo "$i is already insalled ✓"
      else
        echo "It seems you don't have $i installed."
@@ -145,7 +146,10 @@ brewcask_install() {
        echo
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing cask app
-         brew cask install $i
+         brew install $i --cask
+         if [[ $i == "bettertouchtool"]]; then
+           cp ${HOME}/.config/btt/Default.bttpreset  ~/Library/Application\ Support/BetterTouchTool/Default.bttpreset
+         fi
        fi
      fi
   done
@@ -265,6 +269,8 @@ dependants_install() {
     echo "fish directory is already created ✓"
   else
     mkdir "${HOME}/.config/fish"
+    touch "${HOME}/.config/reddit.fish"
+    touch "${HOME}/.config/artifactory.fish"
     echo "Made .config/fish directory ✓"
   fi
 
@@ -284,6 +290,14 @@ dependants_install() {
     echo "Made .config/ranger directory ✓"
   fi
 
+  # Check if ssh directory is created
+  if [ -d "${HOME}/.ssh" ]; then
+    echo ".ssh directory is already created ✓"
+  else
+    mkdir "${HOME}/.ssh"
+    echo "Made .ssh directory ✓"
+  fi
+
   echo
   read -p "Create symlinks for all dotfiles? (y/n) " -n 1 answer
   echo
@@ -291,6 +305,7 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/hub"                        "${HOME}/.hub"
     ln -sf "$REPO_DIR/dotfiles/tmux.conf"                  "${HOME}/.tmux.conf"
     ln -sf "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
+    ln -sf "$REPO_DIR/dotfiles/ssh_config"                 "${HOME}/.ssh/config"
     ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
     ln -sf "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
     ln -sf "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
@@ -346,6 +361,11 @@ dev_env_install() {
   echo "$(cat ${REPO_DIR}/dotfiles/misc/octocat.asciiart)"
   echo
   echo
+  echo 'Setting up 1Password Agent'
+  echo 
+  export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  :' Commented and replaced with 1password SSH agent - symlink added above as well - 11.13.2022
+
   read -p "Would you like to setup Github? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -389,6 +409,21 @@ dev_env_install() {
     echo "github creds added to bashrc config ✓"
     echo
     echo
+  fi
+  '
+
+  # Install Pyenv
+  echo
+  read -p "Install Python and pyenv? (y/n) " -n 1 answer
+  echo
+  if [[ $answer == "y" || $answer == "Y" ]]; then
+    if [ -x /usr/local/bin/pyenv ]; then
+      echo "Python & pyenv is already insalled ✓"
+    else
+      $INSTALL_CMD pyenv
+      pyenv install 3.10.4
+      pyenv global 3.10.4
+    fi
   fi
 
   # Install Ruby
@@ -552,7 +587,14 @@ main() {
       defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Slack.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
       defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/iTerm.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
       defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spotify.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>"/Applications/rekordbox 5/rekordbox.app"</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Grammarly.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
       killall Dock
+      defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"      
+      defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
+      defaults write com.apple.menuextra.battery ShowPercent YES
+      defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  h:mm a"
+      killall SystemUIServer
     fi
   fi
 
