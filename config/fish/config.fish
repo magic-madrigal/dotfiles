@@ -32,7 +32,6 @@ alias git=hub
 # java version for SuiteCloud CLI Dev
 # set -x JAVA_HOME "/usr/libexec/java_home -v 11.0.15.1"
 set -g fish_user_paths "$/opt/homebrew/opt/openjdk@17/bin" $fish_user_paths
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
 
 # node Settings
