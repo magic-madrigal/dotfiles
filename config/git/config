@@ -1,6 +1,7 @@
 [user]
 	email = 3331780+magic-madrigal@users.noreply.github.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRVtm9uRAKLFXBaoBSBFYctEx3wmIjTJNo2l6xK86Hd
+	name = Heriberto Madrigal
 [color]
   ui = true
 [core]
