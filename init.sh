@@ -148,7 +148,7 @@ brewcask_install() {
        if [[ $answer == "y" || $answer == "Y" ]]; then
          # Installing cask app
          brew install $i --cask
-         if [[ $i == "bettertouchtool"]]; then
+         if [[ $i == "bettertouchtool" ]]; then
            cp ${HOME}/.config/btt/Default.bttpreset  ~/Library/Application\ Support/BetterTouchTool/Default.bttpreset
          fi
        fi
