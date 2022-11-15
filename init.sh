@@ -313,7 +313,7 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/config/omf"                 "${HOME}/.config/omf"
   fi
 
-  read -p "Install Powerline Fonts ? (y/n) " -n 1 answer
+  read -p "Install Powerline & Nerd Fonts? (y/n) " -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
     $INSTALL_CMD fontconfig
@@ -321,6 +321,16 @@ dependants_install() {
 
     git clone https://github.com/powerline/fonts.git ./fonts
     ./fonts/install.sh
+
+    git clone https://github.com/ryanoasis/nerd-fonts.git ./nerdfonts
+    ./nerdfonts/install.sh
+
+  fi
+
+  read -p "Install starship cross shell prompt? (y/n) " -n 1 answer
+  echo
+  if [[ $answer == "y" || $answer == "Y" ]]; then
+    curl -sS https://starship.rs/install.sh | sh
   fi
 }
 
@@ -577,7 +587,16 @@ main() {
     if [[ $answer == "y" || $answer == "Y" ]]; then
       defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'; killall Dock
     fi
-
+    
+    read -p "would you to copy your terminal setting over? (y/n)" -n 1 answer
+    echo
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+      open ~/config/terminal/Magic.terminal
+      defaults write com.apple.terminal "Default Window Settings" -string "Magic"
+      defaults write com.apple.Terminal "Startup Window Settings" -string "Magic"
+      
+    fi
+    
     read -p "Would you like to add your favorite apps to your dock? (y/n)" -n 1 answer
     echo
     if [[ $answer == "y" || $answer == "Y" ]]; then

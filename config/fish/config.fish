@@ -1,5 +1,15 @@
 # Disable fish greeting
-set fish_greeting ""
+set fish_greeting "
+   __    __     ______     ______     __     ______    
+  /\ '-./  \   /\  __ \   /\  ___\   /\ \   /\  ___\   
+  \ \ \-./\ \  \ \  __ \  \ \ \__ \  \ \ \  \ \ \____  
+   \ \_\ \ \_\  \ \_\ \_\  \ \_____\  \ \_\  \ \_____\ 
+    \/_/  \/_/   \/_/\/_/   \/_____/   \/_/   \/_____/ 
+                                                       
+"
+
+# Starship Prompt Init
+starship init fish | source
 
 # Reddit Stuff
 set -p fish_user_paths "/opt/homebrew/bin"
@@ -18,6 +28,9 @@ alias git=hub
 
 # java version for SuiteCloud CLI Dev
 # set -x JAVA_HOME "/usr/libexec/java_home -v 11.0.15.1"
+set -g fish_user_paths "$/opt/homebrew/opt/openjdk@17/bin" $fish_user_paths
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
 
 # node Settings
 set -g fish_user_paths "$HOME/.npm-packages/bin" $fish_user_paths
