@@ -1,6 +1,6 @@
 [user]
 	email = 3331780+magic-madrigal@users.noreply.github.com
-	name = Heriberto Madrigal
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRVtm9uRAKLFXBaoBSBFYctEx3wmIjTJNo2l6xK86Hd
 [color]
   ui = true
 [core]
@@ -22,4 +22,11 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[push]
+	autoSetupRemote = true

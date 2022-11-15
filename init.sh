@@ -30,6 +30,8 @@ COLOUR_THEMES="https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master"
 
 # Add brew cask mac apps here!!! - https://github.com/caskroom/homebrew-cask/tree/master/Casks
 brewCaskApps=(
+  1password
+  1password-cli
   bettertouchtool
   dash
   evernote

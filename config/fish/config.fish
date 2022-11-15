@@ -11,6 +11,9 @@ set fish_greeting "
 # Starship Prompt Init
 starship init fish | source
 
+# 1password SSH auth agent
+set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
 # Reddit Stuff
 set -p fish_user_paths "/opt/homebrew/bin"
 
@@ -66,11 +69,12 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 # Github Creds
-source ~/.config/fish/github.fish
+# source ~/.config/fish/github.fish
 
 # other configs
-source ~/.config/fish/artifactory.fish
-source ~/.config/fish/reddit.fish
+# source ~/.config/fish/artifactory.fish
+# source ~/.config/fish/reddit.fish
+
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -79,3 +83,4 @@ source ~/.config/fish/reddit.fish
 # uninstall by removing these lines or running `tabtab uninstall sls`
 # [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
 
+fish_add_path /usr/local/opt/bzip2/bin
