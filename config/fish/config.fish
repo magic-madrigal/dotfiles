@@ -1,15 +1,5 @@
 # Disable fish greeting
-set fish_greeting "
-   __    __     ______     ______     __     ______    
-  /\ '-./  \   /\  __ \   /\  ___\   /\ \   /\  ___\   
-  \ \ \-./\ \  \ \  __ \  \ \ \__ \  \ \ \  \ \ \____  
-   \ \_\ \ \_\  \ \_\ \_\  \ \_____\  \ \_\  \ \_____\ 
-    \/_/  \/_/   \/_/\/_/   \/_____/   \/_/   \/_____/ 
-                                                       
-"
-
-# Starship Prompt Init
-starship init fish | source
+set fish_greeting
 
 # 1password SSH auth agent
 set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -31,7 +21,7 @@ alias git=hub
 
 # java version for SuiteCloud CLI Dev
 # set -x JAVA_HOME "/usr/libexec/java_home -v 11.0.15.1"
-set -g fish_user_paths "$/opt/homebrew/opt/openjdk@17/bin" $fish_user_paths
+set -g fish_user_paths "/opt/homebrew/opt/openjdk@17/bin" $fish_user_paths
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
 
 # node Settings
@@ -40,7 +30,7 @@ set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
 
 # airline theme
-set -g theme_powerline_fonts yes
+# set -g theme_powerline_fonts yes
 
 # git prompt settings
 set __fish_git_prompt_showdirtystate 'yes'
@@ -82,4 +72,7 @@ end
 # uninstall by removing these lines or running `tabtab uninstall sls`
 # [ -f /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish ]; and . /Users/edmadrigal/.npm-packages/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.fish
 
-fish_add_path /usr/local/opt/bzip2/bin
+# fish_add_path /usr/local/opt/bzip2/bin
+
+# Starship Prompt Init
+starship init fish | source
