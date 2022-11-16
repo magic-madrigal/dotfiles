@@ -111,7 +111,7 @@ homebrew_install() {
     else
       echo "It seems you don't have Homebrew installed."
       echo
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       echo "updating Homebrew ..."
       brew update
       brew upgrade
