@@ -270,6 +270,7 @@ dependants_install() {
     echo "fish directory is already created ✓"
   else
     mkdir "${HOME}/.config/fish"
+    mkdir "${HOME}/.config/fish/functions"
     touch "${HOME}/.config/reddit.fish"
     touch "${HOME}/.config/artifactory.fish"
     echo "Made .config/fish directory ✓"
@@ -308,6 +309,7 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/vimrc"                      "${HOME}/.vimrc"
     ln -sf "$REPO_DIR/dotfiles/ssh_config"                 "${HOME}/.ssh/config"
     ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"    "${HOME}/.config/fish/config.fish"
+    ln -sf "$REPO_DIR/dotfiles/config/fish/functions/"     "${HOME}/.config/fish/"
     ln -sf "$REPO_DIR/dotfiles/config/git/config"          "${HOME}/.config/git/config"
     ln -sf "$REPO_DIR/dotfiles/config/git/ignore"          "${HOME}/.config/git/ignore"
     ln -sf "$REPO_DIR/dotfiles/config/ranger/rc.conf"      "${HOME}/.config/ranger/rc.conf"
