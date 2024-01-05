@@ -315,6 +315,8 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/config/ranger/rc.conf"      "${HOME}/.config/ranger/rc.conf"
     ln -sf "$REPO_DIR/dotfiles/config/ranger/scope.conf"   "${HOME}/.config/ranger/scope.conf"
     ln -sf "$REPO_DIR/dotfiles/config/omf"                 "${HOME}/.config/omf"
+    ln -sf "$REPO_DIR/dotfiles/scripts/terminal_sunday.sh" "${HOME}/.terminal_sunday.sh"
+    chmod +x "$HOME/.terminal_sunday.sh"
   fi
 
   read -p "Install Powerline & Nerd Fonts? (y/n) " -n 1 answer
