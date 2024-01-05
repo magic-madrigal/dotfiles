@@ -31,3 +31,5 @@
 	gpgsign = true
 [push]
 	autoSetupRemote = true
+[url "git@github.snooguts.net:"]
+	insteadOf = https://github.snooguts.net

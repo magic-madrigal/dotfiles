@@ -6,9 +6,8 @@ set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/age
 
 # Reddit Stuff
 set -p fish_user_paths "/opt/homebrew/bin"
-
-# SSH Agent
-eval (ssh-agent -c)
+export SNOODEV_DIR="/Users/heriberto.madrigal/Repos/snoodev"
+fish_ssh_agent
 
 # rbenv init
 # status --is-interactive; and source (rbenv init -|psub)
@@ -63,7 +62,7 @@ end
 # other configs
 # source ~/.config/fish/artifactory.fish
 # source ~/.config/fish/reddit.fish
-
+source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -76,3 +75,6 @@ end
 
 # Starship Prompt Init
 starship init fish | source
+
+# Terminal Sunday
+$HOME/.terminal_sunday.sh 1985-08-01 Magic
