@@ -39,6 +39,7 @@ brewCaskApps=(
   flux
   font-fira-code
   font-roboto-mono
+  google-cloud-sdk
   google-chrome
   grammarly
   iterm2
@@ -382,7 +383,7 @@ dependants_install() {
     git clone https://github.com/powerline/fonts.git ./fonts
     ./fonts/install.sh
 
-    git clone https://github.com/ryanoasis/nerd-fonts.git ./nerdfonts
+    git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git ./nerdfonts
     ./nerdfonts/install.sh
   fi
 
