@@ -60,7 +60,7 @@ Plug 'mklabs/jscs.vim', { 'do': 'npm i jscs -g' } " JSCS for vim
 " Colorschemes
 Plug 'felixhummel/setcolors.vim'       " :SetColors all then F8 to switch colorschemes
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ajh17/Spacegray.vim'
+Plug 'vim-scripts/Spacegray.vim'
 Plug 'rakr/vim-one'
 " Plug 'daviddavis/vim-colorpack'
 " Plug 'noahfrederick/vim-hemisu'
