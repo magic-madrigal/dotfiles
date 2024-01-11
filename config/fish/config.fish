@@ -77,4 +77,4 @@ source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 starship init fish | source
 
 # Terminal Sunday
-$HOME/.terminal_sunday.sh 1985-08-01 Magic
+$HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
