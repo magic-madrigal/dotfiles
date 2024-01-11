@@ -357,6 +357,7 @@ dependants_install() {
     ln -sf "$REPO_DIR/dotfiles/ssh_config"                      "${HOME}/.ssh/config"
     ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"         "${HOME}/.config/fish/config.fish"
     ln -sf "$REPO_DIR/dotfiles/config/fish/terminal_sunday.sh"  "${HOME}/.config/fish/terminal_sunday.sh"
+    ln -sf "$REPO_DIR/dotfiles/config/fish/completions"         "${HOME}/.config/fish/completions"
     ln -sf "$REPO_DIR/dotfiles/config/fish/functions/"          "${HOME}/.config/fish/functions"
     ln -sf "$REPO_DIR/dotfiles/config/git/config"               "${HOME}/.config/git/config"
     ln -sf "$REPO_DIR/dotfiles/config/git/ignore"               "${HOME}/.config/git/ignore"
@@ -383,8 +384,8 @@ dependants_install() {
     git clone https://github.com/powerline/fonts.git ./fonts
     ./fonts/install.sh
 
-    git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git ./nerdfonts
-    ./nerdfonts/install.sh
+    git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git ./.nerdfonts
+    ./.nerdfonts/install.sh
   fi
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
@@ -577,8 +578,6 @@ fish_install() {
     curl -L https://get.oh-my.fish | fish
     fish -c "omf update"
     
-    wget https://raw.githubusercontent.com/bobthecow/git-flow-completion/master/git.fish >> ~/.config/fish/completions/git.fish
-    
     echo 
     echo "Making Fish the default shell" | lolcat
     sudo sh -c 'echo /usr/local/bin/fish >> /etc/shells'
@@ -613,7 +612,7 @@ mac_install() {
     open ~/config/terminal/Magic.terminal
     defaults write com.apple.terminal "Default Window Settings" -string "Magic"
     defaults write com.apple.Terminal "Startup Window Settings" -string "Magic"
-    
+    cp $REPO_DIR/dotfiles/config/terminal/iTerm-profiles.json ~/Library/"Application Support"/iTerm2/DynamicProfiles/itermprofiles.json
   fi
   
   read -p "Would you like to add your favorite apps to your dock? (y/n)" -n 1 answer
@@ -623,12 +622,12 @@ mac_install() {
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Slack.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Obsidian.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Visual Studio Code.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/iTerm.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+    defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="small-spacer-tile";}'
 
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Signal.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/WhatsApp.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
-    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/iTerm.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/1Password.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
-
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spotify.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>"/Applications/rekordbox 6/rekordbox.app"</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/zoom.us.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
@@ -708,6 +707,7 @@ if [[ $answer == "y" || $answer == "Y" ]]; then
   open http://fishshell.com/docs/current/
 fi
 echo
+echo "Don't forget to reboot! ;-)" | lolcat
 echo "closing ..."
 }
 
