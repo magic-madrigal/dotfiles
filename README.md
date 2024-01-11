@@ -40,16 +40,16 @@ bash <(curl -s https://raw.githubusercontent.com/magic-madrigal/dotfiles/master/
 ## Mac Apps
 + [Dash](https://kapeli.com/dash)
 + [Signal](https://signal.org/)
-+ [Evernote](https://evernote.com/)
++ [Obsidian](https://obsidian.md/)
 + [1password](https://1password.com/)
 + [Google Chrome](https://www.google.com/chrome/)
 + [Xcode Cli Tools](https://developer.apple.com/download/more/)
 + [mkchromecast](https://mkchromecast.com/)
-+ [kitty](https://sw.kovidgoyal.net/kitty/)
++ [Slack](https://slack.com/)
 + [iTerm2](https://www.iterm2.com/)
-+ [Kitematic](https://kitematic.com/) for Docker containers
 + [Postman](https://www.getpostman.com/)
-+ [Amethyst](https://github.com/ianyh/Amethyst) window manager
++ [Hack](https://apps.apple.com/us/app/hack-for-hacker-news-reader/id1464477788) • Manual install
++ [System Designer](https://github.com/design-first/system-designer) • Manual install
 + [Irvue](http://irvue.tumblr.com/) • Manual install
 + [Dozer](https://github.com/Mortennn/Dozer) • Manual install
 + [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term) • Manual install
