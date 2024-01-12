@@ -612,7 +612,7 @@ mac_install() {
     open ~/config/terminal/Magic.terminal
     defaults write com.apple.terminal "Default Window Settings" -string "Magic"
     defaults write com.apple.Terminal "Startup Window Settings" -string "Magic"
-    cp $REPO_DIR/dotfiles/config/terminal/iTerm-profiles.json ~/Library/"Application Support"/iTerm2/DynamicProfiles/itermprofiles.json
+    ln -f $REPO_DIR/dotfiles/config/terminal/iTerm-profiles.json ~/Library/"Application Support"/iTerm2/DynamicProfiles/itermprofiles.json
   fi
   
   read -p "Would you like to add your favorite apps to your dock? (y/n)" -n 1 answer
