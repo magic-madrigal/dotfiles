@@ -36,6 +36,7 @@ brewCaskApps=(
   bettertouchtool
   dash
   discord
+  etrecheckpro
   flux
   font-fira-code
   font-roboto-mono
