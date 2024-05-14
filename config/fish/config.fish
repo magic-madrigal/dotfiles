@@ -6,6 +6,7 @@ set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/age
 
 # Reddit Stuff
 set -p fish_user_paths "/opt/homebrew/bin"
+set -Ux TILT_USER "magic"
 export SNOODEV_DIR="/Users/heriberto.madrigal/Repos/snoodev"
 fish_ssh_agent
 
@@ -14,6 +15,9 @@ fish_ssh_agent
 
 # pyenv init
 status --is-interactive; and source (pyenv init -|psub)
+
+# abbreviations
+abbr --add --global k kubectl
 
 # hub settings
 alias git=hub
@@ -62,6 +66,7 @@ end
 # other configs
 # source ~/.config/fish/artifactory.fish
 # source ~/.config/fish/reddit.fish
+source ~/.config/fish/openai.fish
 source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 # tabtab source for serverless package
@@ -75,6 +80,9 @@ source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 # Starship Prompt Init
 starship init fish | source
+
+# Atuin Init
+atuin init fish | source
 
 # Terminal Sunday
 $HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic

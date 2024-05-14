@@ -60,6 +60,7 @@ brewCaskApps=(
 depPkgs=(
   lolcat
   cowsay
+  derailed/k9s/k9s
   fortune
   thefuck
   figlet
@@ -70,6 +71,8 @@ depPkgs=(
   highlight
   neofetch
   wget
+  atuin
+  k9s
 )
 
 otherPkgs=(
