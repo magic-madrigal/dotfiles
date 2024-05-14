@@ -84,5 +84,8 @@ starship init fish | source
 # Atuin Init
 atuin init fish | source
 
+# the fuck?
+thefuck --alias | source
+
 # Terminal Sunday
 $HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
