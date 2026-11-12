@@ -142,8 +142,10 @@ type -q atuin; and atuin init fish | source
 # the fuck?
 # thefuck --alias | source
 
-# Terminal Sunday
-$HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
+# Terminal Sunday (interactive shells only: output in non-interactive shells breaks scp/rsync)
+if status is-interactive
+    $HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
+end
 
 # Created by `pipx` on 2025-06-26 07:59:55
 fish_add_path -a $HOME/.local/bin
