@@ -1,0 +1,56 @@
+# A sample starship prompt configuration file,
+# to be placed in ~/.config/starship.toml
+# Ref: https://starship.rs/config/
+# Some of the Emojis used below as symbols, are ttaken from https://emojipedia.org/apple/
+
+format = """\
+    $hostname\
+    $directory\
+    $sudo\
+    $kubernetes\
+    $helm\
+    $aws\
+    $env_var\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $git_metrics\
+    $line_break\
+    $character"""
+
+# Show which machine this is, always (default is SSH-only).
+# Over SSH it gets a 🌐 so remote shells stand out.
+[hostname]
+ssh_only = false
+ssh_symbol = "🌐 "
+format = "[$ssh_symbol$hostname]($style) in "
+style = "bold dimmed green"
+
+[character]
+error_symbol = "[✗](bold bright-red)"
+success_symbol = "[🧙](bold green)"
+
+[kubernetes]
+symbol = "⛴️  "
+format = " $symbol[$context( \\($namespace\\))]($style) "
+style = "bold fg:129"
+disabled = false
+
+[git_metrics]
+disabled = false
+
+[git_status]
+modified = "±"
+# style = "yellow"
+disabled = false
+
+# [line_break]
+
+[helm]
+format = "[$symbol $version](bold white) "
+symbol="⛵"
+disabled = false
+
+[sudo]
+disabled = false
