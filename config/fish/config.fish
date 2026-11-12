@@ -22,10 +22,14 @@ test -d $HOME/.kubescape/bin; and set -p fish_user_paths "$HOME/.kubescape/bin"
 # tailscale
 set -p fish_user_paths "/usr/local/bin"
 
-# SSH agent: prefer 1Password's agent, fall back to a plain ssh-agent
+# SSH agent: over SSH keep the forwarded agent (so 1Password prompts happen on
+# the machine you're sitting at); otherwise prefer 1Password's local agent,
+# falling back to a plain ssh-agent
 set -l op_sock "$HOME/.1password/agent.sock"
 test $os = Darwin; and set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-if test -S "$op_sock"
+if set -q SSH_CONNECTION; and test -S "$SSH_AUTH_SOCK"
+  # forwarded agent from the client — leave it alone
+else if test -S "$op_sock"
   set -gx SSH_AUTH_SOCK "$op_sock"
 else
   fish_ssh_agent
