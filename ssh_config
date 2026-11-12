@@ -1,3 +1,9 @@
 # Include /Users/heriberto.madrigal/src/ssh-config/config/generated
 Host *
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host the-office
+  HostName the-office.hartley-altered.ts.net
+  User magic
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
