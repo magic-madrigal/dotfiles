@@ -154,6 +154,16 @@ if status is-interactive
     $HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
 end
 
+# Late-night nudge: point at late.sh when a shell opens between 7pm and 5am
+if status is-interactive
+    set -l hour (date +%-H)
+    if test $hour -ge 19 -o $hour -lt 5
+        set_color magenta
+        echo "Working late? Check out late.sh: run `late`"
+        set_color normal
+    end
+end
+
 # Created by `pipx` on 2025-06-26 07:59:55
 fish_add_path -a $HOME/.local/bin
 
