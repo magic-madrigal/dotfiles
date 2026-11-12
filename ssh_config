@@ -8,3 +8,9 @@ Host rosie
   User magic
   HostName prismsf.duckdns.org
   port 31339
+
+Host the-office
+  HostName the-office.hartley-altered.ts.net
+  User magic
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
