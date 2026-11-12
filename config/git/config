@@ -27,10 +27,19 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	# Plain ssh-keygen signs via whatever agent SSH_AUTH_SOCK points at:
+	# 1Password locally, or the forwarded agent over SSH (op-ssh-sign only
+	# ever prompts on the local desktop, which hangs remote sessions).
+	program = ssh-keygen
 [commit]
 	gpgsign = true
 [push]
 	autoSetupRemote = true
 [url "git@github.snooguts.net:"]
 	insteadOf = https://github.snooguts.net
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential

@@ -1,20 +1,45 @@
+set -l os (uname)
+
+# Docker Desktop (macOS)
+test -d $HOME/.docker/bin; and fish_add_path -a $HOME/.docker/bin
+
 # Disable fish greeting
 # set fish_greeting
 
-# 1password SSH auth agent
-set -x SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# Homebrew Path (macOS)
+test -d /opt/homebrew/bin; and set -p fish_user_paths "/opt/homebrew/bin"
 
-# Reddit Stuff
-set -p fish_user_paths "/opt/homebrew/bin"
-set -Ux TILT_USER "magic"
-export SNOODEV_DIR="/Users/heriberto.madrigal/Repos/snoodev"
-fish_ssh_agent
+
+# Export NVM_DIR
+set -gx NVM_DIR "$HOME/.nvm"
+
+# AWS Profile
+set -gx AWS_PROFILE "magic-admin"
+
+# k8s Tools
+test -d $HOME/.kubescape/bin; and set -p fish_user_paths "$HOME/.kubescape/bin"
+
+# tailscale
+set -p fish_user_paths "/usr/local/bin"
+
+# SSH agent: over SSH keep the forwarded agent (so 1Password prompts happen on
+# the machine you're sitting at); otherwise prefer 1Password's local agent,
+# falling back to a plain ssh-agent
+set -l op_sock "$HOME/.1password/agent.sock"
+test $os = Darwin; and set op_sock "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+if set -q SSH_CONNECTION; and test -S "$SSH_AUTH_SOCK"
+  # forwarded agent from the client — leave it alone
+else if test -S "$op_sock"
+  set -gx SSH_AUTH_SOCK "$op_sock"
+else
+  fish_ssh_agent
+end
 
 # rbenv init
 # status --is-interactive; and source (rbenv init -|psub)
 
 # pyenv init
-status --is-interactive; and source (pyenv init -|psub)
+# status --is-interactive; and source (pyenv init -|psub)
 
 # abbreviations
 abbr --add --global k kubectl
@@ -34,6 +59,29 @@ set -g fish_user_paths "/usr/local/opt/node@8/bin" $fish_user_paths
 
 # airline theme
 # set -g theme_powerline_fonts yes
+
+# Fish syntax highlighting
+set -g fish_color_autosuggestion '555'  'brblack'
+set -g fish_color_cancel -r
+set -g fish_color_command --bold
+set -g fish_color_comment red
+set -g fish_color_cwd green
+set -g fish_color_cwd_root red
+set -g fish_color_end brmagenta
+set -g fish_color_error brred
+set -g fish_color_escape 'bryellow'  '--bold'
+set -g fish_color_history_current --bold
+set -g fish_color_host normal
+set -g fish_color_match --background=brblue
+set -g fish_color_normal normal
+set -g fish_color_operator bryellow
+set -g fish_color_param cyan
+set -g fish_color_quote yellow
+set -g fish_color_redirection brblue
+set -g fish_color_search_match 'bryellow'  '--background=brblack'
+set -g fish_color_selection 'white'  '--bold'  '--background=brblack'
+set -g fish_color_user brgreen
+set -g fish_color_valid_path --underline
 
 # git prompt settings
 set __fish_git_prompt_showdirtystate 'yes'
@@ -57,7 +105,7 @@ function fish_prompt --description 'Write out the prompt'
     set_color $fish_color_error
   end
 
-  echo -n ' → '
+  echo -n ' ❯ '
 end
 
 # Github Creds
@@ -66,8 +114,15 @@ end
 # other configs
 # source ~/.config/fish/artifactory.fish
 # source ~/.config/fish/reddit.fish
-source ~/.config/fish/openai.fish
-source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+# Local, untracked secret files (only sourced if present)
+for f in openai azure vanta cloudflare attio github
+  test -f ~/.config/fish/$f.fish; and source ~/.config/fish/$f.fish
+end
+
+if type -q brew
+  set -l gcloud_inc (brew --prefix)/share/google-cloud-sdk/path.fish.inc
+  test -f $gcloud_inc; and source $gcloud_inc
+end
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -79,13 +134,24 @@ source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 # fish_add_path /usr/local/opt/bzip2/bin
 
 # Starship Prompt Init
-starship init fish | source
+type -q starship; and starship init fish | source
 
 # Atuin Init
-atuin init fish | source
+type -q atuin; and atuin init fish | source
 
 # the fuck?
-thefuck --alias | source
+# thefuck --alias | source
 
 # Terminal Sunday
 $HOME/.config/fish/terminal_sunday.sh 1985-08-01 Magic
+
+# Created by `pipx` on 2025-06-26 07:59:55
+fish_add_path -a $HOME/.local/bin
+
+# peon-ping quick controls
+function peon; bash $HOME/.claude/hooks/peon-ping/peon.sh $argv; end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
+

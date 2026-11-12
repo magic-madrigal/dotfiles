@@ -1,6 +1,13 @@
 # Include /Users/heriberto.madrigal/src/ssh-config/config/generated
-Host *
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# Use 1Password's agent only when sitting at this machine; in an SSH session
+# fall through to SSH_AUTH_SOCK (the forwarded agent from the client)
+Match !exec "printenv SSH_CONNECTION >/dev/null"
+  IdentityAgent "~/.1password/agent.sock"
+
+Host rosie
+  User magic
+  HostName prismsf.duckdns.org
+  port 31339
 
 Host the-office
   HostName the-office.hartley-altered.ts.net

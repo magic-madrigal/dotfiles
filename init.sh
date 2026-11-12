@@ -14,7 +14,6 @@
 # - iTerm2 Colour Schemes:  http://iterm2colorschemes.com/
 # - Fish Shell:             https://fishshell.com/
 # - Fisherman:              http://fisherman.sh/
-# - Oh My Fish              https://github.com/oh-my-fish
 # - Powerline Fonts:        https://github.com/powerline/fonts
 # - Node                    https://nodejs.org/en/
 # - rbenv                   https://github.com/rbenv/rbenv
@@ -57,7 +56,9 @@ brewCaskApps=(
   zoom
 )
 
-depPkgs=(
+# Package lists per OS. Names are package names; is_installed() checks the
+# package manager, so names don't need to match the command they provide.
+macDepPkgs=(
   lolcat
   cowsay
   derailed/k9s/k9s
@@ -72,10 +73,9 @@ depPkgs=(
   neofetch
   wget
   atuin
-  k9s
 )
 
-otherPkgs=(
+macOtherPkgs=(
   irssi
   htop
   gtop
@@ -83,8 +83,128 @@ otherPkgs=(
   ollama
 )
 
+# Ubuntu/Debian: apt only. atuin, k9s, ollama, gtop are installed by
+# linux_extras_install() since they're not in the apt repos.
+aptDepPkgs=(
+  lolcat
+  cowsay
+  fortune-mod
+  figlet
+  git
+  hub
+  tmux
+  ranger
+  highlight
+  neofetch
+  wget
+  curl
+  unzip
+)
+
+aptOtherPkgs=(
+  irssi
+  htop
+  ncdu
+)
+
+archDepPkgs=(
+  lolcat
+  cowsay
+  fortune-mod
+  figlet
+  git
+  hub
+  tmux
+  ranger
+  highlight
+  fastfetch
+  wget
+  curl
+  unzip
+  atuin
+  k9s
+)
+
+archOtherPkgs=(
+  irssi
+  htop
+  ncdu
+  ollama
+)
+
+# Nerd Fonts to install (release archive names from github.com/ryanoasis/nerd-fonts)
+nerdFonts=(
+  FiraCode
+  RobotoMono
+)
+
+# lolcat/cowsay live in /usr/games on Debian, which isn't always on PATH
+export PATH="$PATH:/usr/games"
+
 # Functions
 # ---------
+
+# Rainbow output when lolcat is available, plain otherwise
+rainbow() {
+  if command -v lolcat &>/dev/null; then lolcat; else cat; fi
+}
+
+# Cowsay when available, plain otherwise
+cow() {
+  if command -v cowsay &>/dev/null; then cowsay -f tux; else cat; fi
+}
+
+is_auto() {
+  [[ $AUTO == "y" || $AUTO == "Y" ]]
+}
+
+# Is a package installed? Asks the package manager, falls back to the command name.
+is_installed() {
+  local pkg="$1"
+  case "$PKG_MGR" in
+    apt)    dpkg -s "$pkg" &>/dev/null && return 0 ;;
+    pacman) pacman -Q "$pkg" &>/dev/null && return 0 ;;
+    brew)   brew list "$pkg" &>/dev/null && return 0 ;;
+  esac
+  hash "${pkg##*/}" 2>/dev/null
+}
+
+# Install every package in the given list, prompting unless on auto pilot
+install_pkg_list() {
+  local i answer
+  for i in "$@"; do
+    if is_installed "$i"; then
+      echo "$i is already insalled ✓"
+      continue
+    fi
+
+    if is_auto; then
+      answer=Y
+    else
+      echo
+      echo "It seems you don't have $i installed."
+      echo
+      read -p "Install $i ? (y/n) " -n 1 answer
+      echo
+    fi
+
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+      $INSTALL_CMD "$i"
+    fi
+  done
+}
+
+# Ask a y/n question; auto pilot answers yes. Usage: ask "Question?" && do_thing
+ask() {
+  local answer
+  if is_auto; then
+    return 0
+  fi
+  echo
+  read -p "$1 (y/n) " -n 1 answer
+  echo
+  [[ $answer == "y" || $answer == "Y" ]]
+}
 
 welcome() {
   echo ' __    __     ______     ______     __     ______    '
@@ -143,7 +263,7 @@ brewcask_install() {
   echo
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing all Casks"
   fi
 
@@ -156,16 +276,16 @@ brewcask_install() {
     else
       echo "It seems you don't have $i installed."
       echo
-      
+
       # Checking Autopilot
       if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
       answer=Y
-      else 
+      else
       echo
       read -p "Install $i ? (y/n) " -n 1 answer
       echo
       fi
-       
+
       # Installing cask app
       if [[ $answer == "y" || $answer == "Y" ]]; then
         brew install $i --cask
@@ -179,7 +299,7 @@ brewcask_install() {
 
 dep_package_install() {
   echo
-  echo 
+  echo
   echo '┌┬┐┌─┐┌─┐  ┌─┐┌─┐┌─┐┬┌─┌─┐┌─┐┌─┐┌─┐'
   echo ' ││├┤ ├─┘  ├─┘├─┤│  ├┴┐├─┤│ ┬├┤ └─┐'
   echo '─┴┘└─┘┴    ┴  ┴ ┴└─┘┴ ┴┴ ┴└─┘└─┘└─┘'
@@ -187,77 +307,60 @@ dep_package_install() {
   echo
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing all dep packages"
   fi
 
-  for i in "${depPkgs[@]}"
-  do
-    :
-    # Checking if package is installed
-    if hash $i 2>/dev/null; then
-      echo "$i is already insalled ✓"
-    else
-      echo
-
-      # Checking Autopilot
-      if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-        answer=Y
-      else 
-        echo
-        echo "It seems you don't have $i installed."
-        echo
-        read -p "Install $i ? (y/n) " -n 1 answer
-        echo
-      fi
-
-      if [[ $answer == "y" || $answer == "Y" ]]; then
-        # Installing package
-        $INSTALL_CMD $i
-      fi
-    fi
-  done
+  install_pkg_list "${depPkgs[@]}"
 }
 
 other_package_install() {
-  echo 
-  echo 
+  echo
+  echo
   echo '┌─┐┌┬┐┬ ┬┌─┐┬─┐  ┌─┐┌┬┐┬ ┬┌─┐┌─┐'
   echo '│ │ │ ├─┤├┤ ├┬┘  └─┐ │ │ │├┤ ├┤ '
   echo '└─┘ ┴ ┴ ┴└─┘┴└─  └─┘ ┴ └─┘└  └  '
-  echo 
-  echo 
+  echo
+  echo
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Other Stuff 0_o"
   fi
 
-  for i in "${otherPkgs[@]}"
-  do
-    :
-    # Checking if package is installed
-    if hash $i 2>/dev/null; then
-      echo "$i is already insalled ✓"
-    else
-      echo
-      # Checking Autopilot
-      if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-        answer=Y
-      else       
-        echo
-        echo "It seems you don't have $i installed."
-        echo
-        read -p "Install $i ? (y/n) " -n 1 answer
-        echo
-      fi
+  install_pkg_list "${otherPkgs[@]}"
+}
 
-      if [[ $answer == "y" || $answer == "Y" ]]; then
-        # Installing package
-        $INSTALL_CMD $i
-      fi
-    fi
-  done
+# Tools that aren't in the Ubuntu/Debian apt repos, installed from upstream
+linux_extras_install() {
+  echo
+  echo "Installing tools that apt doesn't carry..." | rainbow
+  echo
+
+  if command -v atuin &>/dev/null || [ -x "$HOME/.atuin/bin/atuin" ]; then
+    echo "atuin is already insalled ✓"
+  elif ask "Install atuin (shell history)?"; then
+    # --no-modify-path: config.fish already handles atuin init
+    curl --proto '=https' --tlsv1.2 -LsSf \
+      https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh | sh -s -- --no-modify-path
+  fi
+
+  if command -v k9s &>/dev/null; then
+    echo "k9s is already insalled ✓"
+  elif ask "Install k9s?"; then
+    local arch tmp
+    arch=$(dpkg --print-architecture)
+    tmp=$(mktemp -d)
+    curl -fsSLo "$tmp/k9s.deb" "https://github.com/derailed/k9s/releases/latest/download/k9s_linux_${arch}.deb" \
+      && sudo apt-get install -y "$tmp/k9s.deb"
+    rm -rf "$tmp"
+  fi
+
+  if command -v ollama &>/dev/null; then
+    echo "ollama is already insalled ✓"
+  elif ask "Install ollama?"; then
+    curl -fsSL https://ollama.com/install.sh | sh
+  fi
 }
 
 dependants_install() {
@@ -280,7 +383,7 @@ dependants_install() {
   echo
   echo "Script Dependancies Completed!!"
   echo
- 
+
   # Check if repo directory is created
   if [ -d "$REPO_DIR" ]; then
     echo "Repo directory is already created ✓"
@@ -345,7 +448,7 @@ dependants_install() {
   fi
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Creating Symlinks!"
     answer=Y
   else
@@ -355,25 +458,26 @@ dependants_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y"  ]]; then
-    ln -sf "$REPO_DIR/dotfiles/hub"                             "${HOME}/.hub"
-    ln -sf "$REPO_DIR/dotfiles/tmux.conf"                       "${HOME}/.tmux.conf"
-    ln -sf "$REPO_DIR/dotfiles/vimrc"                           "${HOME}/.vimrc"
-    ln -sf "$REPO_DIR/dotfiles/ssh_config"                      "${HOME}/.ssh/config"
-    ln -sf "$REPO_DIR/dotfiles/config/fish/config.fish"         "${HOME}/.config/fish/config.fish"
-    ln -sf "$REPO_DIR/dotfiles/config/fish/terminal_sunday.sh"  "${HOME}/.config/fish/terminal_sunday.sh"
-    ln -sf "$REPO_DIR/dotfiles/config/fish/completions"         "${HOME}/.config/fish/completions"
-    ln -sf "$REPO_DIR/dotfiles/config/fish/functions/"          "${HOME}/.config/fish/functions"
-    ln -sf "$REPO_DIR/dotfiles/config/git/config"               "${HOME}/.config/git/config"
-    ln -sf "$REPO_DIR/dotfiles/config/git/ignore"               "${HOME}/.config/git/ignore"
-    ln -sf "$REPO_DIR/dotfiles/config/ranger/rc.conf"           "${HOME}/.config/ranger/rc.conf"
-    ln -sf "$REPO_DIR/dotfiles/config/ranger/scope.conf"        "${HOME}/.config/ranger/scope.conf"
-    ln -sf "$REPO_DIR/dotfiles/config/omf"                      "${HOME}/.config/omf"
+    ln -sfn "$REPO_DIR/dotfiles/hub"                             "${HOME}/.hub"
+    ln -sfn "$REPO_DIR/dotfiles/tmux.conf"                       "${HOME}/.tmux.conf"
+    ln -sfn "$REPO_DIR/dotfiles/vimrc"                           "${HOME}/.vimrc"
+    ln -sfn "$REPO_DIR/dotfiles/ssh_config"                      "${HOME}/.ssh/config"
+    ln -sfn "$REPO_DIR/dotfiles/config/fish/config.fish"         "${HOME}/.config/fish/config.fish"
+    ln -sfn "$REPO_DIR/dotfiles/config/fish/terminal_sunday.sh"  "${HOME}/.config/fish/terminal_sunday.sh"
+    ln -sfn "$REPO_DIR/dotfiles/config/fish/completions"         "${HOME}/.config/fish/completions"
+    ln -sfn "$REPO_DIR/dotfiles/config/fish/functions/"          "${HOME}/.config/fish/functions"
+    ln -sfn "$REPO_DIR/dotfiles/config/git/config"               "${HOME}/.config/git/config"
+    ln -sfn "$REPO_DIR/dotfiles/config/git/ignore"               "${HOME}/.config/git/ignore"
+    ln -sfn "$REPO_DIR/dotfiles/config/ranger/rc.conf"           "${HOME}/.config/ranger/rc.conf"
+    ln -sfn "$REPO_DIR/dotfiles/config/ranger/scope.conf"        "${HOME}/.config/ranger/scope.conf"
+    ln -sfn "$REPO_DIR/dotfiles/config/starship.toml"            "${HOME}/.config/starship.toml"
+
 
     chmod +x "$HOME/.config/fish/terminal_sunday.sh"
   fi
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Fonts!"
     answer=Y
   else
@@ -382,18 +486,35 @@ dependants_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
+    local font_tmp font_dir font
     $INSTALL_CMD fontconfig
-    cp /usr/local/etc/fonts/fonts.conf.bak /usr/local/etc/fonts/fonts.conf
 
-    git clone https://github.com/powerline/fonts.git ./fonts
-    ./fonts/install.sh
+    if [[ $OS == "MAC" ]]; then
+      font_dir="$HOME/Library/Fonts"
+    else
+      font_dir="$HOME/.local/share/fonts"
+    fi
+    mkdir -p "$font_dir"
 
-    git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git ./.nerdfonts
-    ./.nerdfonts/install.sh
+    # Work in a temp dir so nothing gets cloned into the current directory
+    font_tmp=$(mktemp -d)
+
+    git clone --depth 1 https://github.com/powerline/fonts.git "$font_tmp/powerline" \
+      && "$font_tmp/powerline/install.sh"
+
+    for font in "${nerdFonts[@]}"; do
+      echo "Installing $font Nerd Font"
+      mkdir -p "$font_dir/$font"
+      curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.tar.xz" \
+        | tar -xJ -C "$font_dir/$font"
+    done
+
+    rm -rf "$font_tmp"
+    command -v fc-cache &>/dev/null && fc-cache -f "$font_dir"
   fi
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Starship!"
     answer=Y
   else
@@ -402,7 +523,13 @@ dependants_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    curl -sS https://starship.rs/install.sh | sh
+    if command -v starship &>/dev/null; then
+      echo "starship is already insalled ✓"
+    elif is_auto; then
+      curl -sS https://starship.rs/install.sh | sh -s -- -y
+    else
+      curl -sS https://starship.rs/install.sh | sh
+    fi
   fi
 }
 
@@ -418,7 +545,7 @@ dev_env_install() {
   echo '$$ |__$$ |$$$$$$$$/   $$ $$/         $$ |_____ $$ |  $$ |  $$ $$/   '
   echo '$$    $$/ $$       |   $$$/          $$       |$$ |  $$ |   $$$/    '
   echo '$$$$$$$/   $$$$$$$/     $/           $$$$$$$$/ $$/   $$/     $/     '
-  echo 
+  echo
   echo
 
   # Check if VIM Plug is installed
@@ -433,7 +560,7 @@ dev_env_install() {
     echo "Installing Vim Plug and Plugins"
     $INSTALL_CMD vim
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    vim +slient +VimEnter +PlugInstall +qall
+    vim +silent +VimEnter +PlugInstall +qall
   fi
 
   # Setup Github keys and tokens
@@ -443,12 +570,17 @@ dev_env_install() {
   echo
   echo
   echo 'Setting up 1Password Agent'
-  echo 
-  export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  echo
+  if [[ $OS == "MAC" ]]; then
+    export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  else
+    export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+  fi
+  [ -S "$SSH_AUTH_SOCK" ] || echo "1Password SSH agent socket not found yet — enable it in 1Password > Settings > Developer"
 
   # Install Pyenv
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Pyenv!"
     answer=Y
   else
@@ -458,8 +590,13 @@ dev_env_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    if [ -x /usr/local/bin/pyenv ]; then
+    if command -v pyenv &>/dev/null || [ -d "$HOME/.pyenv" ]; then
       echo "Python & pyenv is already insalled ✓"
+    elif [[ $PKG_MGR == "apt" ]]; then
+      # pyenv isn't in apt; use the official installer (plus python build deps)
+      $INSTALL_CMD build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+        libsqlite3-dev libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+      curl -fsSL https://pyenv.run | bash
     else
       $INSTALL_CMD pyenv
       # pyenv install 3.10.4
@@ -483,7 +620,7 @@ dev_env_install() {
 
   # Install Node
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Node!"
     answer=Y
   else
@@ -493,19 +630,29 @@ dev_env_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    if [ -x /usr/local/bin/node ]; then
+    if command -v node &>/dev/null; then
       echo "Node is already insalled ✓"
     else
-      $INSTALL_CMD nvm
-      mkdir ~/.nvm
-      # nvm install node@8
+      export NVM_DIR="$HOME/.nvm"
+      mkdir -p "$NVM_DIR"
+      if [[ $OS == "MAC" ]]; then
+        $INSTALL_CMD nvm
+        source "$(brew --prefix nvm)/nvm.sh"
+      else
+        # PROFILE=/dev/null: don't let the installer edit shell rc files
+        curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | PROFILE=/dev/null bash
+        source "$NVM_DIR/nvm.sh"
+      fi
+      nvm install --lts
       npm i -g semantic-git-commit-cli
+      # gtop isn't packaged for apt; it's an npm tool
+      [[ $PKG_MGR == "apt" ]] && npm i -g gtop
     fi
   fi
 
   # Install docker
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing docker & docker-compose!"
     answer=Y
   else
@@ -515,27 +662,42 @@ dev_env_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    if [ -x /usr/local/bin/docker ]; then
+    if command -v docker &>/dev/null; then
       echo "docker is already insalled ✓"
     else
-      $INSTALL_CMD docker
-      $INSTALL_CMD docker-compose
-      
-      if [[$OS != "MAC"]]; then
-        read -p "What is the name of the user you would like to add to the docker group? " username
-        usermod -aG docker ${username}
-      fi
+      case "$PKG_MGR" in
+        apt)    $INSTALL_CMD docker.io docker-compose-v2 ;;
+        pacman) $INSTALL_CMD docker docker-compose ;;
+        brew)   $INSTALL_CMD docker docker-compose ;;
+      esac
+    fi
+
+    if [[ $OS != "MAC" ]] && ! id -nG "$USER" | grep -qw docker; then
+      sudo usermod -aG docker "$USER"
+      echo "Added $USER to the docker group (log out and back in to apply)"
     fi
   fi
 
- 
+
   # Checking for AWS CLI
   echo
-  if [ -x /usr/local/bin/aws ]; then
+  if command -v aws &>/dev/null; then
     echo "AWS CLI is already insalled ✓"
-  else
-    $INSTALL_CMD awscli
-    echo "Don't forget to run aws configure!!!" | lolcat
+  elif ask "Install AWS CLI?"; then
+    case "$PKG_MGR" in
+      apt)
+        # awscli isn't in apt anymore; use the official v2 installer
+        local aws_tmp
+        aws_tmp=$(mktemp -d)
+        curl -fsSLo "$aws_tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" \
+          && unzip -q "$aws_tmp/awscliv2.zip" -d "$aws_tmp" \
+          && sudo "$aws_tmp/aws/install"
+        rm -rf "$aws_tmp"
+        ;;
+      pacman) $INSTALL_CMD aws-cli ;;
+      brew)   $INSTALL_CMD awscli ;;
+    esac
+    echo "Don't forget to run aws configure!!!" | rainbow
   fi
 }
 
@@ -560,7 +722,7 @@ fish_install() {
                         (UU)'
 
   if [[ $AUTO == "y" || $AUTO == "Y" ]]; then
-    echo "Auto Pilot ACTIVATED!!" | lolcat
+    echo "Auto Pilot ACTIVATED!!" | rainbow
     echo "Installing Fish Shell!"
     answer=Y
   else
@@ -569,27 +731,48 @@ fish_install() {
   fi
 
   if [[ $answer == "y" || $answer == "Y" ]]; then
-    $INSTALL_CMD fish
+    command -v fish &>/dev/null || $INSTALL_CMD fish
 
     echo
 
-    curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+    curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish \
+      --create-dirs -o ~/.config/fish/functions/fisher.fish
 
-    echo "updating Fisher ...." | lolcat
+    echo "updating Fisher ...." | rainbow
 
-    fish -c "fisher up"
+    fish -c "fisher update"
 
-    curl -L https://get.oh-my.fish | fish
-    fish -c "omf update"
-    
-    echo 
-    echo "Making Fish the default shell" | lolcat
-    sudo sh -c 'echo /usr/local/bin/fish >> /etc/shells'
-    chsh -s `which fish`
+    echo
+    echo "Making Fish the default shell" | rainbow
+    local fish_path
+    fish_path=$(command -v fish)
+    grep -qxF "$fish_path" /etc/shells || echo "$fish_path" | sudo tee -a /etc/shells >/dev/null
+    local login_shell
+    if [[ $OS == "MAC" ]]; then
+      login_shell=$(dscl . -read "/Users/$USER" UserShell | awk '{print $2}')
+    else
+      login_shell=$(getent passwd "$USER" | cut -d: -f7)
+    fi
+    if [[ $login_shell != "$fish_path" ]]; then
+      chsh -s "$fish_path"
+    else
+      echo "fish is already your default shell ✓"
+    fi
   fi
 }
 
 mac_install() {
+  # 1Password SSH agent: expose it at the same path as Linux so ssh_config
+  # (IdentityAgent ~/.1password/agent.sock) works on both
+  local op_mac_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  if [ -L "$HOME/.1password/agent.sock" ] || [ -S "$HOME/.1password/agent.sock" ]; then
+    echo "1Password agent symlink is already created ✓"
+  else
+    mkdir -p "$HOME/.1password"
+    ln -s "$op_mac_sock" "$HOME/.1password/agent.sock"
+    echo "Linked ~/.1password/agent.sock to the 1Password SSH agent ✓"
+  fi
+
   read -p "Would you like to show hidden files? (y/n)" -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -601,15 +784,15 @@ mac_install() {
   if [[ $answer == "y" || $answer == "Y" ]]; then
     defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-    echo "These settings don't take effect until you log back in" | lolcat
-  fi 
-  
+    echo "These settings don't take effect until you log back in" | rainbow
+  fi
+
   read -p "Would you like a recently used apps collection in your dock? (y/n)" -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
     defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'; killall Dock
   fi
-  
+
   read -p "would you to copy your terminal setting over? (y/n)" -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -618,7 +801,7 @@ mac_install() {
     defaults write com.apple.Terminal "Startup Window Settings" -string "Magic"
     ln -f $REPO_DIR/dotfiles/config/terminal/iTerm-profiles.json ~/Library/"Application Support"/iTerm2/DynamicProfiles/itermprofiles.json
   fi
-  
+
   read -p "Would you like to add your favorite apps to your dock? (y/n)" -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -637,7 +820,7 @@ mac_install() {
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/zoom.us.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 
     killall Dock
-    # defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"      
+    # defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
     # defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
     # defaults write com.apple.menuextra.battery ShowPercent YES
     defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  h:mm a"
@@ -646,6 +829,14 @@ mac_install() {
 }
 
 main() {
+  # Running as root puts everything in /root and changes root's shell.
+  # Run as your normal user; the script calls sudo itself where needed.
+  if [[ $EUID -eq 0 ]]; then
+    echo "Don't run this script as root or with sudo."
+    echo "Run it as your normal user: ./init.sh  (it will ask for your sudo password when needed)"
+    exit 1
+  fi
+
   clear
 
   # Welcome Banner
@@ -662,56 +853,70 @@ main() {
   echo
   echo
   read -p "Do you want the scipt to be on auto pilot? (y/n)" -n 1 auto
-  echo 
+  echo
 
   if [[ $auto == "y" || $auto == "Y" ]]; then
     AUTO=Y
   fi
 
-  # Mac OS
-  if [[ $answer == "1" ]]; then
-    OS=MAC
-    INSTALL_CMD="brew install"
-    homebrew_install
-    dependants_install
-    other_package_install
-    dev_env_install
-    brewcask_install
-    mac_install
-    fish_install
-  fi
+  case "$answer" in
+    1) # Mac OS
+      OS=MAC
+      PKG_MGR=brew
+      INSTALL_CMD="brew install"
+      OPEN_CMD=open
+      depPkgs=("${macDepPkgs[@]}")
+      otherPkgs=("${macOtherPkgs[@]}")
+      homebrew_install
+      dependants_install
+      other_package_install
+      dev_env_install
+      brewcask_install
+      mac_install
+      fish_install
+      ;;
+    2) # Ubuntu or debian system
+      OS=LINUX
+      PKG_MGR=apt
+      INSTALL_CMD="sudo apt-get install -y"
+      OPEN_CMD=xdg-open
+      depPkgs=("${aptDepPkgs[@]}")
+      otherPkgs=("${aptOtherPkgs[@]}")
+      sudo apt-get update
+      dependants_install
+      other_package_install
+      linux_extras_install
+      dev_env_install
+      fish_install
+      ;;
+    3) # Arch Linux
+      OS=LINUX
+      PKG_MGR=pacman
+      INSTALL_CMD="sudo pacman -S --needed --noconfirm"
+      OPEN_CMD=xdg-open
+      depPkgs=("${archDepPkgs[@]}")
+      otherPkgs=("${archOtherPkgs[@]}")
+      sudo pacman -Sy
+      dependants_install
+      other_package_install
+      dev_env_install
+      fish_install
+      ;;
+    *)
+      echo "OS not supported!"
+      exit 1
+      ;;
+  esac
 
-  # Ubuntu or debian system
-  if [[ $answer == "2" ]]; then
-    OS=LINUX
-    INSTALL_CMD="apt-get install"
-    dependants_install
-    other_package_install
-    dev_env_install
-    fish_install
-  fi
-
-  # Arch Linux
-  if [[ $answer == "3" ]]; then
-    OS=LINUX
-    INSTALL_CMD="pacman -S"
-    dependants_install
-    other_package_install
-    dev_env_install
-    fish_install
-  else
-    echo "OS not supported!"
-  fi
-
-echo "Setup finished!! For further information I recommend reading the Fish Shell documentation." | lolcat | cowsay -f tux
+echo "Setup finished!! For further information I recommend reading the Fish Shell documentation." | rainbow | cow
 echo
 read -p "Should I open the Fish Shell Documentation for you ? (y/n) " -n 1 answer
 echo
 if [[ $answer == "y" || $answer == "Y" ]]; then
-  open http://fishshell.com/docs/current/
+  $OPEN_CMD http://fishshell.com/docs/current/
 fi
 echo
-echo "Don't forget to reboot! ;-)" | lolcat
+echo "Don't forget to reboot! ;-)" | rainbow
 echo "closing ..."
 }
 
