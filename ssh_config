@@ -14,3 +14,9 @@ Host the-office
   User magic
   IdentityFile ~/.ssh/id_ed25519
   IdentitiesOnly yes
+  ForwardAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host rosie
+  User magic
+  HostName prismsf.duckdns.org
+  port 31339
