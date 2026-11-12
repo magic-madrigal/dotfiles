@@ -762,6 +762,17 @@ fish_install() {
 }
 
 mac_install() {
+  # 1Password SSH agent: expose it at the same path as Linux so ssh_config
+  # (IdentityAgent ~/.1password/agent.sock) works on both
+  local op_mac_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  if [ -L "$HOME/.1password/agent.sock" ] || [ -S "$HOME/.1password/agent.sock" ]; then
+    echo "1Password agent symlink is already created ✓"
+  else
+    mkdir -p "$HOME/.1password"
+    ln -s "$op_mac_sock" "$HOME/.1password/agent.sock"
+    echo "Linked ~/.1password/agent.sock to the 1Password SSH agent ✓"
+  fi
+
   read -p "Would you like to show hidden files? (y/n)" -n 1 answer
   echo
   if [[ $answer == "y" || $answer == "Y" ]]; then
