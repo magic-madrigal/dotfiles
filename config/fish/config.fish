@@ -22,6 +22,11 @@ test -d $HOME/.kubescape/bin; and set -p fish_user_paths "$HOME/.kubescape/bin"
 # tailscale
 set -p fish_user_paths "/usr/local/bin"
 
+# Mosh: end a mosh-server whose client has been gone for 7 days (default: never).
+# Set for every shell, not only interactive ones: mosh starts mosh-server through
+# a non-interactive `fish -c` over SSH.
+set -gx MOSH_SERVER_NETWORK_TMOUT 604800
+
 # SSH agent: over SSH keep the forwarded agent (so 1Password prompts happen on
 # the machine you're sitting at); otherwise prefer 1Password's local agent,
 # falling back to a plain ssh-agent
