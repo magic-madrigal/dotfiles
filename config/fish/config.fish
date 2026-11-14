@@ -26,6 +26,8 @@ set -p fish_user_paths "/usr/local/bin"
 # Set for every shell, not only interactive ones: mosh starts mosh-server through
 # a non-interactive `fish -c` over SSH.
 set -gx MOSH_SERVER_NETWORK_TMOUT 604800
+# Mosh client: keep the remote window title as is, without the "[mosh]" prefix.
+set -gx MOSH_TITLE_NOPREFIX 1
 
 # SSH agent: over SSH keep the forwarded agent (so 1Password prompts happen on
 # the machine you're sitting at); otherwise prefer 1Password's local agent,
