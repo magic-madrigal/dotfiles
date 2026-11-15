@@ -1,6 +1,9 @@
 # Include /Users/heriberto.madrigal/src/ssh-config/config/generated
 # Use 1Password's agent only when sitting at this machine; in an SSH session
 # fall through to SSH_AUTH_SOCK (the forwarded agent from the client)
+# (macOS and Linux keep the socket in different places; first match wins)
+Match !exec "printenv SSH_CONNECTION >/dev/null" exec "uname | grep -q Darwin"
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 Match !exec "printenv SSH_CONNECTION >/dev/null"
   IdentityAgent "~/.1password/agent.sock"
 
